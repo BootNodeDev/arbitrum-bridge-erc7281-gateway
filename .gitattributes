@@ -1,0 +1,5 @@
+# https://bun.sh/docs/install/lockfile#how-do-i-git-diff-bun-s-lockfile
+# to be able to `git diff` Bun's lockfile run the following commands on your local repo
+# git config diff.lockb.textconv bun
+# git config diff.lockb.binary true
+*.lockb binary diff=lockb
