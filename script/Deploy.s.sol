@@ -5,5 +5,7 @@ import { BaseScript } from "./Base.s.sol";
 
 /// @dev See the Solidity Scripting tutorial: https://book.getfoundry.sh/tutorials/solidity-scripting
 contract Deploy is BaseScript {
-  function run() public broadcast {}
+    function run() public broadcast {
+        // deploy code here
+    }
 }
