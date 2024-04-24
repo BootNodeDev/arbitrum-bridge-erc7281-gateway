@@ -1,0 +1,60 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity >=0.8.25 <0.9.0;
+
+import { Test } from "forge-std/src/Test.sol";
+import { console2 } from "forge-std/src/console2.sol";
+
+import { XERC20 } from "xerc20/contracts/XERC20.sol";
+
+import { XERC20Adapter } from "src/XERC20Adapter.sol";
+
+contract XERC20AdapterTest is Test {
+    XERC20 internal xerc20;
+    XERC20Adapter internal adapter;
+
+    address internal _owner = address(0x1);
+    address internal _minter = address(0x2);
+    address internal _user = address(0x3);
+
+    function setUp() public {
+        xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
+        adapter = new XERC20Adapter(address(xerc20));
+
+        vm.prank(_owner);
+        xerc20.setLimits(_minter, 42 ether, 0);
+    }
+
+    function test_IsArbitrumEnabled() public view {
+        assertEq(adapter.isArbitrumEnabled(), uint8(0xb1));
+    }
+
+    function test_GetXERC20() public view {
+        assertEq(adapter.getXERC20(), address(xerc20));
+    }
+
+    function test_Name() public view {
+        assertEq(adapter.name(), xerc20.name());
+    }
+
+    function test_Symbol() public view {
+        assertEq(adapter.symbol(), xerc20.symbol());
+    }
+
+    function test_Decimals() public view {
+        assertEq(adapter.decimals(), xerc20.decimals());
+    }
+
+    function test_TotalSupply() public {
+        vm.prank(_minter);
+        xerc20.mint(_user, 10 ether);
+
+        assertEq(adapter.totalSupply(), 10 ether);
+    }
+
+    function test_BalanceOf() public {
+        vm.prank(_minter);
+        xerc20.mint(_user, 1 ether);
+
+        assertEq(adapter.balanceOf(_user), xerc20.balanceOf(_user));
+    }
+}

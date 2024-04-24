@@ -1,2 +1,3 @@
-@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
+@openzeppelin/=node_modules/@openzeppelin/
 forge-std/=node_modules/forge-std/
+xerc20/=node_modules/xerc20/solidity/

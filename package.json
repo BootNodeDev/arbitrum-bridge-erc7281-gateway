@@ -1,13 +1,14 @@
 {
   "name": "arbitrum-bridge-erc7281-gateway",
-  "description": "",
+  "description": "ERC-7281 CustomGateway for Arbitrum canonical bridge",
   "version": "0.1.0",
   "author": {
-    "name": "BootNode.dev",
+    "name": "BootNode.Dev",
     "url": "https://github.com/BootNodeDev"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.1"
+    "@openzeppelin/contracts": "^4.9.6",
+    "xerc20": "github:defi-wonderland/xERC20"
   },
   "devDependencies": {
     "forge-std": "github:foundry-rs/forge-std#v1.8.1",
