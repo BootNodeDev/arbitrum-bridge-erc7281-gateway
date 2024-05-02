@@ -51,6 +51,12 @@ contract L1XERC20GatewayTest is Test {
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);
 
+        // WARNING: tests will only pass when setting block.basefee to 0
+        // or when running with --gas-report, which makes it seem like there's
+        // a bug in forge when using this flag.
+        // This is safe since block.basefee is only used by the Inbox to check
+        // if enough funds were submitted in order to send/redeem the
+        // cross-chain message.
         vm.fee(0);
     }
 
