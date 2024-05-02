@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { Owned } from "solmate/auth/Owned.sol";
-
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
@@ -11,11 +10,11 @@ import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1Gatewa
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
-contract L1XERC20Adapter is IXERC20Adapter, ERC165, Owned {
+contract L1XERC20Adapter is IXERC20Adapter, ERC165, Ownable {
     address internal xerc20;
     address internal gatewayAddress;
 
-    constructor(address _xerc20, address _gatewayAddress) Owned(msg.sender) {
+    constructor(address _xerc20, address _gatewayAddress) {
         // TODO: maybe we should check whether the token is actually an XERC20
         xerc20 = _xerc20;
         gatewayAddress = _gatewayAddress;
