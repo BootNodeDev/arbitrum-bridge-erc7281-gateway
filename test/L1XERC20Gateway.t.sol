@@ -6,12 +6,12 @@ import { console2 } from "forge-std/console2.sol";
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
-import { XERC20Adapter } from "src/XERC20Adapter.sol";
+import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
 contract L1XERC20GatewayTest is Test {
     XERC20 internal xerc20;
-    XERC20Adapter internal adapter;
+    L1XERC20Adapter internal adapter;
     L1XERC20Gateway internal gateway;
 
     address internal _owner = makeAddr("owner");
@@ -19,7 +19,7 @@ contract L1XERC20GatewayTest is Test {
     function setUp() public {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
         gateway = new L1XERC20Gateway(makeAddr("router"), makeAddr("inbox"));
-        adapter = new XERC20Adapter(address(xerc20), address(gateway));
+        adapter = new L1XERC20Adapter(address(xerc20), address(gateway));
     }
 
     function test_AddressIsAdapter() public view {

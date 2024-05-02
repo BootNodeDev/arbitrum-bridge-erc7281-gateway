@@ -8,12 +8,12 @@ import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
-import { XERC20Adapter } from "src/XERC20Adapter.sol";
+import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
-contract XERC20AdapterTest is Test {
+contract L1XERC20AdapterTest is Test {
     XERC20 internal xerc20;
-    XERC20Adapter internal adapter;
+    L1XERC20Adapter internal adapter;
 
     address internal _owner = address(0x1);
     address internal _minter = address(0x2);
@@ -21,7 +21,7 @@ contract XERC20AdapterTest is Test {
 
     function setUp() public {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
-        adapter = new XERC20Adapter(address(xerc20), makeAddr("gateway"));
+        adapter = new L1XERC20Adapter(address(xerc20), makeAddr("gateway"));
 
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);

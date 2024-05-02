@@ -9,7 +9,7 @@ import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1Gatewa
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
-import { XERC20Adapter } from "src/XERC20Adapter.sol";
+import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
 
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
@@ -17,7 +17,7 @@ contract L1XERC20GatewayTest is Test {
     uint256 internal mainnetFork;
 
     XERC20 internal xerc20;
-    XERC20Adapter internal adapter;
+    L1XERC20Adapter internal adapter;
 
     address internal _owner = makeAddr("owner");
     address internal _minter = makeAddr("minter");
@@ -46,7 +46,7 @@ contract L1XERC20GatewayTest is Test {
         vm.deal(_owner, 100 ether);
 
         vm.prank(_owner);
-        adapter = new XERC20Adapter(address(xerc20), address(l1Gateway));
+        adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway));
 
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);

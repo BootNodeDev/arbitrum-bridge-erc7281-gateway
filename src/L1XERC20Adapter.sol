@@ -11,7 +11,7 @@ import { IL1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/IL1Gate
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
-contract XERC20Adapter is IXERC20Adapter, ERC165, Owned {
+contract L1XERC20Adapter is IXERC20Adapter, ERC165, Owned {
     address internal xerc20;
     address internal gatewayAddress;
 
