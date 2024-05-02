@@ -7,22 +7,24 @@ import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
-import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
+import { L2XERC20Adapter } from "src/L2XERC20Adapter.sol";
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
 import { XERC20BaseAdapterTest } from "test/XERC20BaseAdapterTest.t.sol";
 
-contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
-    L1XERC20Adapter internal adapter;
+contract L2XERC20AdapterTest is XERC20BaseAdapterTest {
+    L2XERC20Adapter internal adapter;
+
+    address internal _l1Token = makeAddr("l1Token");
 
     function setUp() public override {
         super.setUp();
 
-        adapter = new L1XERC20Adapter(address(xerc20), makeAddr("gateway"));
+        adapter = new L2XERC20Adapter(address(xerc20), makeAddr("gateway"), _l1Token);
     }
 
-    function test_IsArbitrumEnabled() public view {
-        assertEq(adapter.isArbitrumEnabled(), uint8(0xb1));
+    function test_L1Address() public view {
+        assertEq(adapter.l1Address(), _l1Token);
     }
 
     function test_GetXERC20() public view {
