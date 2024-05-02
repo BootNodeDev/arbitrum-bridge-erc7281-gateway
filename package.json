@@ -7,7 +7,9 @@
     "url": "https://github.com/BootNodeDev"
   },
   "dependencies": {
+    "@arbitrum/token-bridge-contracts": "github:OffchainLabs/token-bridge-contracts",
     "@openzeppelin/contracts": "^4.9.6",
+    "solmate": "github:transmissions11/solmate",
     "xerc20": "github:defi-wonderland/xERC20"
   },
   "devDependencies": {

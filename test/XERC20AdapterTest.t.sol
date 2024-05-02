@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { Test } from "forge-std/src/Test.sol";
-import { console2 } from "forge-std/src/console2.sol";
+import { Test } from "forge-std/Test.sol";
+import { console2 } from "forge-std/console2.sol";
 
 import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
 
@@ -21,7 +21,7 @@ contract XERC20AdapterTest is Test {
 
     function setUp() public {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
-        adapter = new XERC20Adapter(address(xerc20));
+        adapter = new XERC20Adapter(address(xerc20), makeAddr("gateway"));
 
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);
