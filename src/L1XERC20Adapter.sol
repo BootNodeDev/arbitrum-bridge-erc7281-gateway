@@ -6,7 +6,7 @@ import { Owned } from "solmate/auth/Owned.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
-import { IL1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/IL1GatewayRouter.sol";
+import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
 
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
@@ -49,7 +49,7 @@ contract L1XERC20Adapter is IXERC20Adapter, ERC165, Owned {
         gateway.registerTokenToL2{ value: valueForGateway }(
             l2TokenAddress, maxGasForGateway, gasPriceBid, maxSubmissionCostForGateway, creditBackAddress
         );
-        IL1GatewayRouter(gateway.router()).setGateway{ value: valueForRouter }(
+        L1GatewayRouter(gateway.router()).setGateway{ value: valueForRouter }(
             gatewayAddress, maxGasForRouter, gasPriceBid, maxSubmissionCostForRouter, creditBackAddress
         );
     }

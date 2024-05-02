@@ -3,7 +3,7 @@ pragma solidity >=0.8.25 <0.9.0;
 
 import { ERC165Checker } from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
-import { IXERC20 } from "xerc20/interfaces/IXERC20.sol";
+import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
@@ -29,7 +29,7 @@ abstract contract XERC20BaseGateway {
             _token = IXERC20Adapter(_tokenOrAdapter).getXERC20();
         }
 
-        IXERC20(_token).burn(_from, _amount);
+        XERC20(_token).burn(_from, _amount);
         return _amount;
     }
 
@@ -39,6 +39,6 @@ abstract contract XERC20BaseGateway {
         if (addressIsAdapter(_tokenOrAdapter)) {
             _token = IXERC20Adapter(_tokenOrAdapter).getXERC20();
         }
-        IXERC20(_token).mint(_dest, _amount);
+        XERC20(_token).mint(_dest, _amount);
     }
 }
