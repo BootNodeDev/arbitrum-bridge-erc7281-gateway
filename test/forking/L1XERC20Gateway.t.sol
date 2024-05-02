@@ -2,9 +2,9 @@
 pragma solidity >=0.8.25 <0.9.0;
 
 import { Test } from "forge-std/Test.sol";
+// solhint-disable-next-line
 import { console2 } from "forge-std/console2.sol";
 
-import { Inbox } from "@arbitrum/nitro-contracts/src/bridge/Inbox.sol";
 import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
@@ -14,7 +14,7 @@ import { XERC20Adapter } from "src/XERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
 contract L1XERC20GatewayTest is Test {
-    uint256 mainnetFork;
+    uint256 internal mainnetFork;
 
     XERC20 internal xerc20;
     XERC20Adapter internal adapter;
@@ -27,7 +27,7 @@ contract L1XERC20GatewayTest is Test {
     address internal l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
     L1XERC20Gateway internal l1Gateway;
 
-    address l2TokenAddress = makeAddr("l2TokenAddress");
+    address internal l2TokenAddress = makeAddr("l2TokenAddress");
 
     uint256 public maxSubmissionCost = 20;
     uint256 public maxGas = 1_000_000_000;

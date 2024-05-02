@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { IERC165 } from "@openzeppelin/contracts/interfaces/IERC165.sol";
-
 interface IXERC20Adapter {
     function isArbitrumEnabled() external view returns (uint8);
     function getXERC20() external view returns (address);
