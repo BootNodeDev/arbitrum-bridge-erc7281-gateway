@@ -99,10 +99,10 @@ contract L1XERC20GatewayTest is Test {
         address dest = makeAddr("dest");
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
 
-        vm.expectEmit(true, true, true, true);
+        vm.expectEmit(true, true, true, true, address(xerc20));
         emit Transfer(_user, address(0), 1 ether);
 
-        vm.expectEmit(true, true, true, true);
+        vm.expectEmit(true, true, true, true, address(l1Gateway));
         emit DepositInitiated(address(adapter), _user, dest, 1_487_345, 1 ether);
 
         vm.deal(_user, 10 ether);
