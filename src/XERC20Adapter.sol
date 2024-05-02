@@ -3,7 +3,7 @@ pragma solidity >=0.8.25 <0.9.0;
 
 import { Owned } from "solmate/auth/Owned.sol";
 
-import { ERC20 } from "@openzeppelin/contracts/token/erc20/ERC20.sol";
+import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import { IL1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/IL1GatewayRouter.sol";
