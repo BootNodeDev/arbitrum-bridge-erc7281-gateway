@@ -14,6 +14,7 @@
   solc = "0.8.25"
   src = "src"
   test = "test"
+  ignored_warnings_from = ["node_modules"]
 
 [profile.ci]
   fuzz = { runs = 10_000 }
@@ -47,7 +48,8 @@
   gnosis_chain = "https://rpc.gnosischain.com"
   goerli = "https://goerli.infura.io/v3/${API_KEY_INFURA}"
   localhost = "http://localhost:8545"
-  mainnet = "https://eth-mainnet.g.alchemy.com/v2/${API_KEY_ALCHEMY}"
+  # mainnet = "https://eth-mainnet.g.alchemy.com/v2/${API_KEY_ALCHEMY}"
+  mainnet = "https://eth.llamarpc.com"
   optimism = "https://optimism-mainnet.infura.io/v3/${API_KEY_INFURA}"
   polygon = "https://polygon-mainnet.infura.io/v3/${API_KEY_INFURA}"
   sepolia = "https://sepolia.infura.io/v3/${API_KEY_INFURA}"

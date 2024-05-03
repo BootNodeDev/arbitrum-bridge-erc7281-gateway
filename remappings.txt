@@ -1,2 +1,6 @@
-@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
-forge-std/=node_modules/forge-std/
+@openzeppelin/=node_modules/@openzeppelin/
+@arbitrum/nitro-contracts/=node_modules/@arbitrum/nitro-contracts/
+@arbitrum/tokenbridge/=node_modules/@arbitrum/token-bridge-contracts/contracts/tokenbridge/
+forge-std/=node_modules/forge-std/src/
+xerc20/=node_modules/xerc20/solidity/
+solmate/=node_modules/solmate/src/
