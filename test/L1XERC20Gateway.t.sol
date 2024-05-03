@@ -18,7 +18,7 @@ contract L1XERC20GatewayTest is Test {
 
     function setUp() public {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
-        gateway = new L1XERC20Gateway(makeAddr("router"), makeAddr("inbox"));
+        gateway = new L1XERC20Gateway(_owner, makeAddr("router"), makeAddr("inbox"));
         adapter = new L1XERC20Adapter(address(xerc20), address(gateway));
     }
 

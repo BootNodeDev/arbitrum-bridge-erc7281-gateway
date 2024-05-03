@@ -40,7 +40,7 @@ contract L1XERC20GatewayTest is Test {
 
         mainnetFork = vm.createSelectFork("mainnet", 19_690_420);
 
-        l1Gateway = new L1XERC20Gateway(l1GatewayRouter, l1Inbox);
+        l1Gateway = new L1XERC20Gateway(_owner, l1GatewayRouter, l1Inbox);
 
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
         vm.deal(_owner, 100 ether);
