@@ -9,9 +9,12 @@
   "dependencies": {
     "@arbitrum/token-bridge-contracts": "github:OffchainLabs/token-bridge-contracts",
     "@openzeppelin/contracts": "^4.9.6",
+    "solmate": "github:transmissions11/solmate",
     "xerc20": "github:defi-wonderland/xERC20"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-run-script": "^0.4.1",
     "forge-std": "github:foundry-rs/forge-std#v1.8.1",
     "prettier": "^3.0.0",
     "solhint": "^3.6.2"
@@ -26,6 +29,12 @@
     "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
     "test": "forge test",
     "test:coverage": "forge coverage",
-    "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage"
+    "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage",
+    "factory:sepolia": "forge script script/XERC20/XERC20Factory.s.sol:XERC20FactoryDeploy --rpc-url $SEPOLIA_RPC_URL --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:factory:sepolia": "dotenv-run-script factory:sepolia",
+    "token:sepolia": "forge script script/XERC20/XERC20.s.sol:XERC20Deploy --rpc-url $SEPOLIA_RPC_URL --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:token:sepolia": "dotenv-run-script token:sepolia",
+    "gateway:sepolia": "forge script script/L1Gateway.s.sol:L1GatewayDeploy --rpc-url $SEPOLIA_RPC_URL --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:gateway:sepolia": "dotenv-run-script gateway:sepolia"
   }
 }
