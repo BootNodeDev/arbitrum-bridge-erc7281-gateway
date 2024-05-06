@@ -46,7 +46,7 @@ contract L1XERC20GatewayTest is Test {
         vm.deal(_owner, 100 ether);
 
         vm.prank(_owner);
-        adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway));
+        adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway), _owner);
 
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);

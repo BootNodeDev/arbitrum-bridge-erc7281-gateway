@@ -20,7 +20,7 @@ contract L2XERC20AdapterTest is XERC20BaseAdapterTest {
     function setUp() public override {
         super.setUp();
 
-        adapter = new L2XERC20Adapter(address(xerc20), makeAddr("gateway"), _l1Token);
+        adapter = new L2XERC20Adapter(address(xerc20), makeAddr("gateway"), _l1Token, _owner);
     }
 
     function test_L1Address() public view {

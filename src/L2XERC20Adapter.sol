@@ -9,9 +9,10 @@ contract L2XERC20Adapter is XERC20BaseAdapter {
     constructor(
         address _xerc20,
         address _gatewayAddress,
-        address _l1AdapterOrToken
+        address _l1AdapterOrToken,
+        address _owner
     )
-        XERC20BaseAdapter(_xerc20, _gatewayAddress)
+        XERC20BaseAdapter(_xerc20, _gatewayAddress, _owner)
     {
         l1Address = _l1AdapterOrToken;
     }

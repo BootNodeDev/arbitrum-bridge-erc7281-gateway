@@ -42,7 +42,7 @@ contract L2XERC20GatewayTest is Test {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
 
         vm.prank(_owner);
-        adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token);
+        adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token, _owner);
 
         vm.prank(_owner);
         xerc20.setLimits(_minter, 42 ether, 0);
