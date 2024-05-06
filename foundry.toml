@@ -42,7 +42,9 @@
   wrap_comments = true
 
 [rpc_endpoints]
-  arbitrum = "https://arbitrum-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  # arbitrum = "https://arbitrum-mainnet.infura.io/v3/${API_KEY_INFURA}"
+  # arbitrum = "https://rpc.ankr.com/arbitrum"
+  arbitrum = "https://arbitrum.llamarpc.com"
   avalanche = "https://avalanche-mainnet.infura.io/v3/${API_KEY_INFURA}"
   bnb_smart_chain = "https://bsc-dataseed.binance.org"
   gnosis_chain = "https://rpc.gnosischain.com"
