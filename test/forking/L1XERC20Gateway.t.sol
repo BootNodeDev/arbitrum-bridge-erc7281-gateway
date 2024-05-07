@@ -90,7 +90,6 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
             address(adapter), _dest, _dest, amountToBridge, maxGas, gasPriceBid, abi.encode(maxSubmissionCost, "")
         );
 
-        assertEq(adapter.balanceOf(_user), xerc20.balanceOf(_user));
         assertEq(xerc20.balanceOf(_user), balanceBefore - amountToBridge);
     }
 

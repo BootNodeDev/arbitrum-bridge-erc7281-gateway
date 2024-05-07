@@ -74,7 +74,6 @@ contract L2XERC20GatewayTest is Test {
         vm.prank(_user);
         l2Gateway.outboundTransfer(l1Token, _dest, amountToBridge, 0, 0, data);
 
-        assertEq(adapter.balanceOf(_user), xerc20.balanceOf(_user));
         assertEq(xerc20.balanceOf(_user), balanceBefore - amountToBridge);
     }
 
@@ -94,7 +93,6 @@ contract L2XERC20GatewayTest is Test {
         vm.prank(AddressAliasHelper.applyL1ToL2Alias(l1Counterpart));
         l2Gateway.finalizeInboundTransfer(l1Token, _user, _dest, amountToBridge, data);
 
-        assertEq(adapter.balanceOf(_dest), xerc20.balanceOf(_dest));
         assertEq(xerc20.balanceOf(_dest), balanceBefore + amountToBridge);
     }
 

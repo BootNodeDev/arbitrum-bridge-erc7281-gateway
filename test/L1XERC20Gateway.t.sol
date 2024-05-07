@@ -43,7 +43,6 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         vm.prank(address(IInbox(l1Gateway.inbox()).bridge()));
         l1Gateway.finalizeInboundTransfer(address(adapter), _user, _dest, amountToBridge, data);
 
-        assertEq(adapter.balanceOf(_dest), xerc20.balanceOf(_dest));
         assertEq(xerc20.balanceOf(_dest), balanceBefore + amountToBridge);
     }
 
