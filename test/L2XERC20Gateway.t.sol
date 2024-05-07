@@ -15,16 +15,16 @@ import { L2XERC20Adapter } from "src/L2XERC20Adapter.sol";
 import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
 
 contract L2XERC20GatewayTest is Test {
-    uint256 internal arbitrumFork;
-
     ArbSysMock public arbSysMock = new ArbSysMock();
 
     XERC20 internal xerc20;
     L2XERC20Adapter internal adapter;
 
     address internal _owner = makeAddr("owner");
-    address internal _minter = makeAddr("minter");
     address internal _user = makeAddr("user");
+    address internal _dest = makeAddr("dest");
+
+    uint256 internal amountToBridge = 25;
 
     address internal l2GatewayRouter = 0x5288c571Fd7aD117beA99bF60FE0846C4E84F933;
     L2XERC20Gateway internal l2Gateway;
@@ -35,8 +35,6 @@ contract L2XERC20GatewayTest is Test {
     function setUp() public {
         vm.label(l2GatewayRouter, "l2GatewayRouter");
 
-        arbitrumFork = vm.createFork("arbitrum", 202_675_145);
-
         l2Gateway = new L2XERC20Gateway(l1Counterpart, l2GatewayRouter);
 
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
@@ -45,43 +43,59 @@ contract L2XERC20GatewayTest is Test {
         adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token);
 
         vm.prank(_owner);
-        xerc20.setLimits(_minter, 42 ether, 0);
+        xerc20.setLimits(address(l2Gateway), 420 ether, 69 ether);
 
-        vm.prank(_minter);
-        xerc20.mint(_user, 10 ether);
+        _registerToken();
     }
 
     function test_OutboundTransfer() public {
-        _registerToken();
-
-        vm.prank(_owner);
-        xerc20.setLimits(address(l2Gateway), 0, 42 ether);
+        deal(address(xerc20), _user, 10 ether);
 
         vm.prank(_user);
-        xerc20.approve(address(l2Gateway), 1 ether);
-
-        address dest = makeAddr("dest");
+        xerc20.approve(address(l2Gateway), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(xerc20));
-        emit Transfer(_user, address(0), 1 ether);
+        emit Transfer(_user, address(0), amountToBridge);
 
         // withdrawal params
-        bytes memory data = new bytes(0);
+        bytes memory data = "";
 
         uint256 expectedId = 0;
-        bytes memory expectedData = l2Gateway.getOutboundCalldata(l1Token, _user, dest, 1 ether, data);
-        vm.expectEmit(true, true, true, true);
+        bytes memory expectedData = l2Gateway.getOutboundCalldata(l1Token, _user, _dest, amountToBridge, data);
+        vm.expectEmit(true, true, true, true, address(l2Gateway));
         emit TxToL1(_user, l1Counterpart, expectedId, expectedData);
 
         vm.expectEmit(true, true, true, true, address(l2Gateway));
-        emit WithdrawalInitiated(l1Token, _user, dest, expectedId, 0, 1 ether);
+        emit WithdrawalInitiated(l1Token, _user, _dest, expectedId, 0, amountToBridge);
+
+        uint256 balanceBefore = xerc20.balanceOf(_user);
 
         vm.etch(0x0000000000000000000000000000000000000064, address(arbSysMock).code);
         vm.prank(_user);
-        l2Gateway.outboundTransfer(l1Token, dest, 1 ether, 0, 0, bytes(""));
+        l2Gateway.outboundTransfer(l1Token, _dest, amountToBridge, 0, 0, data);
 
         assertEq(adapter.balanceOf(_user), xerc20.balanceOf(_user));
-        assertEq(xerc20.balanceOf(_user), 9 ether);
+        assertEq(xerc20.balanceOf(_user), balanceBefore - amountToBridge);
+    }
+
+    function test_FinalizeInboundTransfer() public {
+        bytes memory gatewayData = "";
+        bytes memory callHookData = "";
+        bytes memory data = abi.encode(gatewayData, callHookData);
+
+        vm.expectEmit(true, true, true, true, address(xerc20));
+        emit Transfer(address(0), _dest, amountToBridge);
+
+        vm.expectEmit(true, true, true, true, address(l2Gateway));
+        emit DepositFinalized(l1Token, _user, _dest, amountToBridge);
+
+        uint256 balanceBefore = xerc20.balanceOf(_dest);
+
+        vm.prank(AddressAliasHelper.applyL1ToL2Alias(l1Counterpart));
+        l2Gateway.finalizeInboundTransfer(l1Token, _user, _dest, amountToBridge, data);
+
+        assertEq(adapter.balanceOf(_dest), xerc20.balanceOf(_dest));
+        assertEq(xerc20.balanceOf(_dest), balanceBefore + amountToBridge);
     }
 
     ////
@@ -112,5 +126,6 @@ contract L2XERC20GatewayTest is Test {
         uint256 _exitNum,
         uint256 _amount
     );
+    event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _receiver, uint256 _amount);
     event TxToL1(address indexed _from, address indexed _receiver, uint256 indexed _id, bytes _data);
 }
