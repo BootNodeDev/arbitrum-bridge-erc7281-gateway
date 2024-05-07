@@ -16,7 +16,7 @@ contract L2GatewayDeploy is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        bytes32 _salt = keccak256(abi.encodePacked(SALT, msg.sender));
+        bytes32 _salt = keccak256(abi.encodePacked(SALT, vm.addr(deployerPrivateKey)));
 
         bytes memory _creation = type(L2XERC20Gateway).creationCode;
         bytes memory _bytecode = abi.encodePacked(_creation, abi.encode(l1Counterpart, router));

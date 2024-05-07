@@ -5,6 +5,8 @@ import { Script } from "forge-std/Script.sol";
 import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
 import { ICREATE3Factory } from "./utils/ICREATE3Factory.sol";
 
+import { console2 } from "forge-std/console2.sol";
+
 contract L1AdapterDeploy is Script {
     string public constant SALT = "XERC20Adapter-v0.3";
 
@@ -18,7 +20,7 @@ contract L1AdapterDeploy is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        bytes32 _salt = keccak256(abi.encodePacked(SALT, msg.sender));
+        bytes32 _salt = keccak256(abi.encodePacked(SALT, vm.addr(deployerPrivateKey)));
 
         bytes memory _creation = type(L1XERC20Adapter).creationCode;
         bytes memory _bytecode = abi.encodePacked(_creation, abi.encode(token, gateway, owner));
