@@ -32,15 +32,18 @@ contract L2XERC20GatewayTest is Test {
     address internal l1Counterpart = makeAddr("l1Counterpart");
     address internal l1Token = makeAddr("l1Token");
 
-    function setUp() public {
+    address internal bridgeable;
+
+    function setUp() public virtual {
         vm.label(l2GatewayRouter, "l2GatewayRouter");
 
         l2Gateway = new L2XERC20Gateway(l1Counterpart, l2GatewayRouter);
 
-        xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
+        _createXERC20();
 
         vm.prank(_owner);
         adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token);
+        _setBridgeable();
 
         vm.prank(_owner);
         xerc20.setLimits(address(l2Gateway), 420 ether, 69 ether);
@@ -97,14 +100,24 @@ contract L2XERC20GatewayTest is Test {
     }
 
     ////
-    // Internal helper functions (shamelessly stolen from @arbitrum)
+    // Helpers
     ////
+
+    function _createXERC20() internal virtual {
+        xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
+    }
+
+    function _setBridgeable() internal virtual {
+        bridgeable = address(adapter);
+    }
+
+    //// shamelessly stolen from @arbitrum
     function _registerToken() internal virtual returns (address) {
         address[] memory l1Tokens = new address[](1);
         l1Tokens[0] = l1Token;
 
         address[] memory l2Tokens = new address[](1);
-        l2Tokens[0] = address(adapter);
+        l2Tokens[0] = bridgeable;
 
         vm.prank(AddressAliasHelper.applyL1ToL2Alias(l1Counterpart));
         l2Gateway.registerTokenFromL1(l1Tokens, l2Tokens);
