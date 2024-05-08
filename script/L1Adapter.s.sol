@@ -18,8 +18,6 @@ contract L1AdapterDeploy is Script {
         address token = vm.envAddress("L1_XERC20");
         address gateway = vm.envAddress("L1_GATEWAY");
 
-        vm.startBroadcast(deployerPrivateKey);
-
         bytes32 _salt = keccak256(abi.encodePacked(SALT, vm.addr(deployerPrivateKey)));
 
         bytes memory _creation = type(L1XERC20Adapter).creationCode;
