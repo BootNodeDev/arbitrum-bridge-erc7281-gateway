@@ -28,7 +28,7 @@ abstract contract L1XERC20BaseGatewayTest is Test {
         assert(l1Inbox != address(0));
         vm.label(l1Inbox, "l1Inbox");
 
-        l1Gateway = new L1XERC20Gateway(_owner, l1GatewayRouter, l1Inbox);
+        l1Gateway = new L1XERC20Gateway(l1GatewayRouter, l1Inbox, _owner);
 
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
         vm.prank(_owner);
