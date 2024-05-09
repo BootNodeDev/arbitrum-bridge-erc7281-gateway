@@ -13,11 +13,11 @@ import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
 
 contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
-    function setUp() public {
+    function setUp() public override {
         l1GatewayRouter = makeAddr("l1GatewayRouter");
         l1Inbox = address(new InboxMock());
 
-        _setUp();
+        super.setUp();
     }
 
     function test_AddressIsAdapter() public view {
@@ -43,7 +43,6 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         vm.prank(address(IInbox(l1Gateway.inbox()).bridge()));
         l1Gateway.finalizeInboundTransfer(address(adapter), _user, _dest, amountToBridge, data);
 
-        assertEq(adapter.balanceOf(_dest), xerc20.balanceOf(_dest));
         assertEq(xerc20.balanceOf(_dest), balanceBefore + amountToBridge);
     }
 

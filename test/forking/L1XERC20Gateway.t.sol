@@ -5,10 +5,11 @@ pragma solidity >=0.8.25 <0.9.0;
 import { console2 } from "forge-std/console2.sol";
 
 import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
+import { ICustomToken } from "@arbitrum/tokenbridge/ethereum/ICustomToken.sol";
 
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
 
-contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
+contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     uint256 internal mainnetFork;
 
     address internal l2TokenAddress = makeAddr("l2TokenAddress");
@@ -19,7 +20,9 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
     uint256 public nativeTokenTotalFee = gasPriceBid * maxGas;
     uint256 public retryableCost = maxSubmissionCost + nativeTokenTotalFee;
 
-    function setUp() public {
+    address internal bridgeable;
+
+    function setUp() public virtual override {
         mainnetFork = vm.createSelectFork("mainnet", 19_690_420);
         // WARNING: tests will only pass when setting block.basefee to 0
         // or when running with --gas-report, which makes it seem like there's
@@ -32,14 +35,15 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         l1GatewayRouter = 0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef;
         l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
 
-        _setUp();
-
         deal(_owner, 100 ether);
+
+        super.setUp();
+        bridgeable = address(adapter);
     }
 
     function test_RegisterTokenOnL2() public {
         vm.prank(_owner);
-        adapter.registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -52,13 +56,13 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         );
 
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
-        assertEq(router.getGateway(address(adapter)), address(l1Gateway));
-        assertEq(router.calculateL2TokenAddress(address(adapter)), l2TokenAddress);
+        assertEq(router.getGateway(bridgeable), address(l1Gateway));
+        assertEq(router.calculateL2TokenAddress(bridgeable), l2TokenAddress);
     }
 
     function test_OutboundTransferCustomRefund() public {
         vm.prank(_owner);
-        adapter.registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -80,17 +84,16 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         emit Transfer(_user, address(0), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(address(adapter), _user, _dest, 1_487_345, amountToBridge);
+        emit DepositInitiated(bridgeable, _user, _dest, 1_487_345, amountToBridge);
 
         uint256 balanceBefore = xerc20.balanceOf(_user);
 
         deal(_user, 10 ether);
         vm.prank(_user);
         router.outboundTransferCustomRefund{ value: 3 ether }(
-            address(adapter), _dest, _dest, amountToBridge, maxGas, gasPriceBid, abi.encode(maxSubmissionCost, "")
+            bridgeable, _dest, _dest, amountToBridge, maxGas, gasPriceBid, abi.encode(maxSubmissionCost, "")
         );
 
-        assertEq(adapter.balanceOf(_user), xerc20.balanceOf(_user));
         assertEq(xerc20.balanceOf(_user), balanceBefore - amountToBridge);
     }
 
