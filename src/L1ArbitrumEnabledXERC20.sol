@@ -25,7 +25,10 @@ interface IL1GatewayRouter {
         uint256 _gasPriceBid,
         uint256 _maxSubmissionCost,
         address _creditBackAddress
-    ) external payable returns (uint256);
+    )
+        external
+        payable
+        returns (uint256);
 }
 
 contract L1ArbitrumEnabledXERC20 is XERC20 {
