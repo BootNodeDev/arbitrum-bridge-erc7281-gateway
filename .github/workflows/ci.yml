@@ -85,6 +85,8 @@ jobs:
 
       - name: "Run the tests"
         run: "forge test"
+        env:
+          ETH_RPC_URL: ${{ env.ETH_RPC_URL }}
 
       - name: "Add test summary"
         run: |
