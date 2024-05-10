@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
-
 import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
-import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
+import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 
-contract L1XERC20Adapter is XERC20BaseAdapter {
-    constructor(address _xerc20, address _gatewayAddress) XERC20BaseAdapter(_xerc20, _gatewayAddress) { }
-
-    function isArbitrumEnabled() external pure returns (uint8) {
-        return uint8(0xb1);
-    }
+contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
+    constructor(
+        address _xerc20,
+        address _gatewayAddress
+    )
+        XERC20BaseAdapter(_xerc20)
+        L1ArbitrumEnabled(_gatewayAddress)
+    { }
 
     function registerTokenOnL2(
         address l2TokenAddress,
@@ -26,15 +26,19 @@ contract L1XERC20Adapter is XERC20BaseAdapter {
     )
         public
         payable
+        override
         onlyOwner
     {
-        L1XERC20Gateway gateway = L1XERC20Gateway(gatewayAddress);
-
-        gateway.registerTokenToL2{ value: valueForGateway }(
-            l2TokenAddress, maxGasForGateway, gasPriceBid, maxSubmissionCostForGateway, creditBackAddress
-        );
-        L1GatewayRouter(gateway.router()).setGateway{ value: valueForRouter }(
-            gatewayAddress, maxGasForRouter, gasPriceBid, maxSubmissionCostForRouter, creditBackAddress
+        _registerTokenOnL2(
+            l2TokenAddress,
+            maxSubmissionCostForGateway,
+            maxSubmissionCostForRouter,
+            maxGasForGateway,
+            maxGasForRouter,
+            gasPriceBid,
+            valueForGateway,
+            valueForRouter,
+            creditBackAddress
         );
     }
 }

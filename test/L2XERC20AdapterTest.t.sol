@@ -20,6 +20,6 @@ contract L2XERC20AdapterTest is XERC20BaseAdapterTest {
     }
 
     function _createAdapter() internal override {
-        _adapter = address(new L2XERC20Adapter(address(xerc20), makeAddr("gateway"), _l1Token));
+        _adapter = address(new L2XERC20Adapter(address(xerc20), _l1Token));
     }
 }
