@@ -37,11 +37,8 @@
   wrap_comments = true
 
 [rpc_endpoints]
-  # arbitrum = "https://arbitrum-mainnet.infura.io/v3/${API_KEY_INFURA}"
-  # arbitrum = "https://rpc.ankr.com/arbitrum"
-  arbitrum = "https://arbitrum.llamarpc.com"
   localhost = "http://localhost:8545"
-  # mainnet = "https://eth-mainnet.g.alchemy.com/v2/${API_KEY_ALCHEMY}"
-  mainnet = "https://eth.llamarpc.com"
-  sepolia = "https://eth-sepolia.g.alchemy.com/v2/${API_KEY_ALCHEMY}"
+  arbitrum = "${ARBITRUM_RPC_UR}"
+  mainnet = "${ETH_RPC_URL}"
+  sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
   arbitrum-sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
