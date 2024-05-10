@@ -3,7 +3,6 @@ name: "CI"
 env:
   API_KEY_ALCHEMY: ${{ secrets.API_KEY_ALCHEMY }}
   FOUNDRY_PROFILE: "ci"
-  ETH_RPC_URL: ${{ secrets.ETH_RPC_URL }}
 
 on:
   workflow_dispatch:
@@ -86,6 +85,8 @@ jobs:
 
       - name: "Run the tests"
         run: "forge test"
+        env:
+          ETH_RPC_URL: ${{ secrets.ETH_RPC_URL }}
 
       - name: "Add test summary"
         run: |
