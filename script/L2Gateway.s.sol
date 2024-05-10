@@ -9,7 +9,7 @@ contract L2GatewayDeploy is Script {
     function run() public {
         string memory salt = vm.envString("GATEWAY_SALT");
         uint256 deployerPrivateKey = vm.envUint("DEPLOYER_PK");
-        address create3Fatory = vm.envAddress("CREATE3_FACTORY");
+        address create3Factory = vm.envAddress("CREATE3_FACTORY");
         address router = vm.envAddress("L2_ARBITRUM_ROUTER");
         address l1Counterpart = vm.envAddress("L1_GATEWAY");
 
@@ -20,7 +20,7 @@ contract L2GatewayDeploy is Script {
         bytes memory _creation = type(L2XERC20Gateway).creationCode;
         bytes memory _bytecode = abi.encodePacked(_creation, abi.encode(l1Counterpart, router));
 
-        ICREATE3Factory(create3Fatory).deploy(_salt, _bytecode);
+        ICREATE3Factory(create3Factory).deploy(_salt, _bytecode);
 
         vm.stopBroadcast();
     }

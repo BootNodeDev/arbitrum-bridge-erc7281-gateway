@@ -10,7 +10,7 @@ contract L2AdapterDeploy is Script {
 
     function run() public {
         uint256 deployerPrivateKey = vm.envUint("DEPLOYER_PK");
-        address create3Fatory = vm.envAddress("CREATE3_FACTORY");
+        address create3Factory = vm.envAddress("CREATE3_FACTORY");
 
         address owner = vm.envAddress("L2_ADAPTER_OWNER");
         address token = vm.envAddress("L2_XERC20");
@@ -24,7 +24,7 @@ contract L2AdapterDeploy is Script {
         bytes memory _creation = type(L2XERC20Adapter).creationCode;
         bytes memory _bytecode = abi.encodePacked(_creation, abi.encode(token, gateway, l1Adapter, owner));
 
-        ICREATE3Factory(create3Fatory).deploy(_salt, _bytecode);
+        ICREATE3Factory(create3Factory).deploy(_salt, _bytecode);
 
         vm.stopBroadcast();
     }
