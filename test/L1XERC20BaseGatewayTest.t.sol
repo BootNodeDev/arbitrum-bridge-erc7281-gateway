@@ -22,7 +22,7 @@ abstract contract L1XERC20BaseGatewayTest is Test {
 
     uint256 internal amountToBridge = 25;
 
-    function _setUp() internal {
+    function setUp() public virtual {
         assert(l1GatewayRouter != address(0));
         vm.label(l1GatewayRouter, "l1GatewayRouter");
         assert(l1Inbox != address(0));
@@ -30,12 +30,19 @@ abstract contract L1XERC20BaseGatewayTest is Test {
 
         l1Gateway = new L1XERC20Gateway(l1GatewayRouter, l1Inbox, _owner);
 
-        xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
+        _createXERC20();
         vm.prank(_owner);
         xerc20.setLimits(address(l1Gateway), 420 ether, 69 ether);
 
         vm.prank(_owner);
         adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway), _owner);
+    }
+
+    ////
+    // Helpers
+    ////
+    function _createXERC20() internal virtual {
+        xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
     }
 
     ////
