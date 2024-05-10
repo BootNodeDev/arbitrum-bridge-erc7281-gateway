@@ -20,7 +20,7 @@ Note that OpenZeppelin Contracts is pre-installed, so you can follow that as an 
 
 ## Deployment Scripts
 
-Deployment script documentation can be found  [here](./docs/deployment.md).
+Deployment script documentation can be found [here](./docs/deployment.md).
 
 ## Usage
 
