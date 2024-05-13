@@ -91,7 +91,6 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
             // require(IArbToken(l2Token).l1Address() == _l1Token, "NOT_EXPECTED_L1_TOKEN");
             // ----------------- END MODIFICATION -----------------
 
-
             _amount = outboundEscrowTransfer(l2Token, _from, _amount);
             id = triggerWithdrawal(_l1Token, _from, _to, _amount, _extraData);
         }
@@ -101,7 +100,8 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
     /**
      * @notice Mint on L2 upon L1 deposit.
      * If token not yet deployed and symbol/name/decimal data is included, deploys StandardArbERC20
-     * @dev Callable only by the L1ERC20Gateway.outboundTransfer method. For initial deployments of a token the L1 L1ERC20Gateway
+     * @dev Callable only by the L1ERC20Gateway.outboundTransfer method. For initial deployments of a token the L1
+     * L1ERC20Gateway
      * is expected to include the deployData. If not a L1 withdrawal is automatically triggered for the user
      * @param _token L1 address of ERC20
      * @param _from account that initiated the deposit in the L1
@@ -115,9 +115,14 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
         address _to,
         uint256 _amount,
         bytes calldata _data
-    ) external payable virtual override onlyCounterpartGateway {
-        (bytes memory gatewayData, bytes memory callHookData) = GatewayMessageHandler
-            .parseFromL1GatewayMsg(_data);
+    )
+        external
+        payable
+        virtual
+        override
+        onlyCounterpartGateway
+    {
+        (bytes memory gatewayData, bytes memory callHookData) = GatewayMessageHandler.parseFromL1GatewayMsg(_data);
 
         if (callHookData.length != 0) {
             // callHookData should always be 0 since inboundEscrowAndCall is disabled
@@ -127,14 +132,7 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
         address expectedAddress = calculateL2TokenAddress(_token);
 
         if (!expectedAddress.isContract()) {
-            bool shouldHalt = handleNoContract(
-                _token,
-                expectedAddress,
-                _from,
-                _to,
-                _amount,
-                gatewayData
-            );
+            bool shouldHalt = handleNoContract(_token, expectedAddress, _from, _to, _amount, gatewayData);
             if (shouldHalt) return;
         }
         // ignores gatewayData if token already deployed
