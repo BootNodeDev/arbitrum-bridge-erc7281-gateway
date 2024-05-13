@@ -11,7 +11,7 @@ contract L1AdapterRegister is Script {
         L1XERC20Adapter adapter = L1XERC20Adapter(vm.envAddress("L1_ADAPTER"));
 
         uint256 sendValue = vm.envOr("SEND_VALUE", uint256(0));
-        address l2TokenAddress = vm.envAddress("L2_ADAPTER");
+        address l2TokenAddress = vm.envAddress("L2_XERC20");
         uint256 maxSubmissionCostForGateway = vm.envOr("MAX_SUBMISSION_COST_FOR_GATEWAY", uint256(0));
         uint256 maxSubmissionCostForRouter = vm.envOr("MAX_SUBMISSION_COST_FOR_ROUTER", uint256(0));
         uint256 maxGasForGateway = vm.envOr("MAX_GAS_FOR_GATEWAY", uint256(0));
