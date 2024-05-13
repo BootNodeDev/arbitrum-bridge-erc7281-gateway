@@ -14,7 +14,7 @@
   solc = "0.8.25"
   src = "src"
   test = "test"
-  ignored_warnings_from = ["node_modules"]
+  ignored_warnings_from = ["node_modules", "src/vendor"]
 
 [profile.ci]
   fuzz = { runs = 10_000 }
@@ -35,6 +35,7 @@
   quote_style = "double"
   tab_width = 4
   wrap_comments = true
+  ignore = ["src/vendor/*"]
 
 [rpc_endpoints]
   localhost = "http://localhost:8545"
