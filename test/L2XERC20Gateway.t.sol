@@ -42,7 +42,7 @@ contract L2XERC20GatewayTest is Test {
         _createXERC20();
 
         vm.prank(_owner);
-        adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token, _owner);
+        adapter = new L2XERC20Adapter(address(xerc20), l1Token, _owner);
         _setBridgeable();
 
         vm.prank(_owner);
