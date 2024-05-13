@@ -23,14 +23,14 @@ Make sure to use the same `CREATE3_FACTORY`, `GATEWAY_SALT` and `DEPLOYER_PK` va
 
 Notice that the values used for `GATEWAY_SALT` can be used only once on each network.
 
-**L1XER20Gateway** Required environment variables:
+**L1XERC20Gateway** Required environment variables:
 
 - `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L2EXERC20Gateway`
+  same address for `L2XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L2EXERC20Gateway`
+  `L2XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L2EXERC20Gateway`
+  `L2XERC20Gateway`
 - `L1_GATEWAY_OWNER`: Gateway's owner address
 - `L1_ARBITRUM_ROUTER`: Use `0xcE18836b233C83325Cc8848CA4487e94C6288264` for deploying on Sepolia
 - `L1_ARBITRUM_INBOX`: Use `0xaAe29B0366299461418F5324a79Afc425BE5ae21` for deploying on Sepolia
@@ -51,11 +51,11 @@ $ yarn deploy:gateway
 **L2XER20Gateway** Required environment variables:
 
 - `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L1EXERC20Gateway`
+  same address for `L1XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L1EXERC20Gateway`
+  `L1XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L1EXERC20Gateway`
+  `L1XERC20Gateway`
 - `L1_GATEWAY`: Address resulting from running `deploy:gateway:sepolia`
 - `L2_ARBITRUM_ROUTER`: Use `0xcE18836b233C83325Cc8848CA4487e94C6288264` for deploying on Arbitrum Sepolia
 
@@ -75,7 +75,7 @@ $ yarn deploy:gateway:arb
 
 **XERC20**
 
-The XER20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address on
+The XERC20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address on
 both networks you must to use the same `DEPLOYER_PK`, `XERC20_FACTORY`, `XERC20_NAME` and `XERC20_SYMBOL` values for
 running bot scripts.
 
@@ -119,16 +119,16 @@ Make sure to use the same `CREATE3_FACTORY`, `ADAPTER_SALT` and `DEPLOYER_PK` va
 
 Notice that the values used for `ADAPTER_SALT` can be used only once on each network.
 
-**L1XER20Adapter**
+**L1XERC20Adapter**
 
 Required environment variables:
 
 - `ADAPTER_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L2EXERC20Adapter`
+  same address for `L2XERC20Adapter`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L2EXERC20Adapter`
+  `L2XERC20Adapter`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L2EXERC20Adapter`
+  `L2XERC20Adapter`
 - `L1_ADAPTER_OWNER`: Adapter's owner address
 - `L1_XERC20`: The XERC20 address this adapter is being deployed for
 - `L1_GATEWAY`: Address resulting from running `deploy:gateway:sepolia`
@@ -145,16 +145,16 @@ Ethereum Mainnet
 $ yarn deploy:adapter
 ```
 
-**L2XER20Adapter**
+**L2XERC20Adapter**
 
 Required environment variables:
 
 - `ADAPTER_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L1EXERC20Adapter`
+  same address for `L1XERC20Adapter`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L1EXERC20Adapter`
+  `L1XERC20Adapter`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L1EXERC20Adapter`
+  `L1XERC20Adapter`
 - `L2_ADAPTER_OWNER`: Adapter's owner address
 - `L2_XERC20`: The XERC20 address this adapter is being deployed for
 - `L2_GATEWAY`: Address resulting from running `deploy:gateway:arb:sepolia`
