@@ -75,8 +75,8 @@ $ yarn deploy:gateway:arb
 
 **XERC20**
 
-The XERC20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address on
-both networks you must to use the same `DEPLOYER_PK`, `XERC20_FACTORY`, `XERC20_NAME` and `XERC20_SYMBOL` values for
+The XERC20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address
+on both networks you must to use the same `DEPLOYER_PK`, `XERC20_FACTORY`, `XERC20_NAME` and `XERC20_SYMBOL` values for
 running bot scripts.
 
 Required environment variables:
