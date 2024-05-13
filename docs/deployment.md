@@ -112,26 +112,14 @@ Arbitrum One
 $ yarn deploy:token:arb:sepolia
 ```
 
-**Adapters**
-
-Both adapters are deployed using a `CREATE3Factory` in order to make their addresses equal in both L1 and L2 networks.
-Make sure to use the same `CREATE3_FACTORY`, `ADAPTER_SALT` and `DEPLOYER_PK` values for running both scripts.
-
-Notice that the values used for `ADAPTER_SALT` can be used only once on each network.
-
 **L1XERC20Adapter**
 
 Required environment variables:
 
-- `ADAPTER_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L2XERC20Adapter`
-- `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L2XERC20Adapter`
-- `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L2XERC20Adapter`
+- `DEPLOYER_PK`: Your deployer address private key.
 - `L1_ADAPTER_OWNER`: Adapter's owner address
-- `L1_XERC20`: The XERC20 address this adapter is being deployed for
-- `L1_GATEWAY`: Address resulting from running `deploy:gateway:sepolia`
+- `L1_XERC20`: The XERC20 address this adapter is being deployed for.
+- `L1_GATEWAY`: Address resulting from running `deploy:gateway:sepolia`.
 
 Sepolia
 
@@ -143,32 +131,6 @@ Ethereum Mainnet
 
 ```sh
 $ yarn deploy:adapter
-```
-
-**L2XERC20Adapter**
-
-Required environment variables:
-
-- `ADAPTER_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L1XERC20Adapter`
-- `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
-  `L1XERC20Adapter`
-- `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
-  `L1XERC20Adapter`
-- `L2_ADAPTER_OWNER`: Adapter's owner address
-- `L2_XERC20`: The XERC20 address this adapter is being deployed for
-- `L2_GATEWAY`: Address resulting from running `deploy:gateway:arb:sepolia`
-
-Arbitrum Sepolia
-
-```sh
-$ yarn deploy:adapter:arb:sepolia
-```
-
-Arbitrum One
-
-```sh
-$ yarn deploy:adapter:arb
 ```
 
 ### Register the XERC20/Adapter on the Arbitrum Router and on L2
@@ -183,11 +145,11 @@ Required environment variables:
 - `L1_ADAPTER_OWNER_PK`: Owner of `L1XERC20Adapter` address private key
 - `SEND_VALUE`: Total amount of ETH to send for payment
 - `L1_ADAPTER`: Address `L1XERC20Adapter`
-- `L2_ADAPTER`: Address `L2XERC20Adapter`
-- `MAX_SUBMISSION_COST_FOR_GATEWAY`: Base submission cost L2 retryable tick3et for gateway
-- `MAX_SUBMISSION_COST_FOR_ROUTER`: Base submission cost L2 retryable tick3et for router
-- `MAX_GAS_FOR_GATEWAY`: Max gas for L2 retryable exrecution for gateway message
-- `MAX_GAS_FOR_ROUTER`: Max gas for L2 retryable exrecution for router message
+- `L2_XERC20`: The XERC20 address on L2.
+- `MAX_SUBMISSION_COST_FOR_GATEWAY`: Base submission cost L2 retryable ticket for gateway
+- `MAX_SUBMISSION_COST_FOR_ROUTER`: Base submission cost L2 retryable ticket for router
+- `MAX_GAS_FOR_GATEWAY`: Max gas for L2 retryable execution for gateway message
+- `MAX_GAS_FOR_ROUTER`: Max gas for L2 retryable execution for router message
 - `GAS_PRICE_BID`: Gas price for L2 retryable ticket
 - `VALUE_FOR_GATEWAY`: ETH value to transfer to the gateway
 - `VALUE_FOR_ROUTER`: ETH value to transfer to the gateway
