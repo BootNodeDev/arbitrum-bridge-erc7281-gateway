@@ -9,9 +9,9 @@ import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
  * @title Gateway for xERC20 bridging functionality
  */
 contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
-    constructor(address _l1Router, address _inbox) {
+    constructor(address _l1Router, address _inbox, address _owner) {
         address _l2Counterpart = address(this);
-        initialize(_l2Counterpart, _l1Router, _inbox, msg.sender);
+        initialize(_l2Counterpart, _l1Router, _inbox, _owner);
     }
 
     function outboundEscrowTransfer(

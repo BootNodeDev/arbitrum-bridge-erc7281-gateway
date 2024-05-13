@@ -11,10 +11,11 @@ abstract contract XERC20BaseAdapter is IXERC20Adapter, ERC165, Ownable {
     address internal xerc20;
     address internal gatewayAddress;
 
-    constructor(address _xerc20, address _gatewayAddress) {
+    constructor(address _xerc20, address _gatewayAddress, address _owner) {
         // TODO: maybe we should check whether the token is actually an XERC20
         xerc20 = _xerc20;
         gatewayAddress = _gatewayAddress;
+        _transferOwnership(_owner);
     }
 
     function getXERC20() external view returns (address) {

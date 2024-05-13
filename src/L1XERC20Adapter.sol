@@ -7,7 +7,13 @@ import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
 contract L1XERC20Adapter is XERC20BaseAdapter {
-    constructor(address _xerc20, address _gatewayAddress) XERC20BaseAdapter(_xerc20, _gatewayAddress) { }
+    constructor(
+        address _xerc20,
+        address _gatewayAddress,
+        address _owner
+    )
+        XERC20BaseAdapter(_xerc20, _gatewayAddress, _owner)
+    { }
 
     function isArbitrumEnabled() external pure returns (uint8) {
         return uint8(0xb1);

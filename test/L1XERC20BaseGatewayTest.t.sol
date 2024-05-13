@@ -28,14 +28,14 @@ abstract contract L1XERC20BaseGatewayTest is Test {
         assert(l1Inbox != address(0));
         vm.label(l1Inbox, "l1Inbox");
 
-        l1Gateway = new L1XERC20Gateway(l1GatewayRouter, l1Inbox);
+        l1Gateway = new L1XERC20Gateway(l1GatewayRouter, l1Inbox, _owner);
 
         _createXERC20();
         vm.prank(_owner);
         xerc20.setLimits(address(l1Gateway), 420 ether, 69 ether);
 
         vm.prank(_owner);
-        adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway));
+        adapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway), _owner);
     }
 
     ////
