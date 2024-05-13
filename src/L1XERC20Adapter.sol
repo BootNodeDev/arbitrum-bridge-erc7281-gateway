@@ -7,9 +7,10 @@ import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
     constructor(
         address _xerc20,
-        address _gatewayAddress
+        address _gatewayAddress,
+        address _owner
     )
-        XERC20BaseAdapter(_xerc20)
+        XERC20BaseAdapter(_xerc20, _owner)
         L1ArbitrumEnabled(_gatewayAddress)
     { }
 

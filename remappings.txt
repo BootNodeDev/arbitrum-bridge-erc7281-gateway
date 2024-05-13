@@ -4,3 +4,4 @@
 forge-std/=node_modules/forge-std/src/
 xerc20/=node_modules/xerc20/solidity/
 solmate/=node_modules/solmate/src/
+isolmate/=node_modules/solmate/src/

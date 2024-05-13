@@ -9,9 +9,12 @@
   "dependencies": {
     "@arbitrum/token-bridge-contracts": "github:OffchainLabs/token-bridge-contracts",
     "@openzeppelin/contracts": "^4.9.6",
+    "solmate": "github:transmissions11/solmate",
     "xerc20": "github:defi-wonderland/xERC20"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-run-script": "^0.4.1",
     "forge-std": "github:foundry-rs/forge-std#v1.8.1",
     "prettier": "^3.0.0",
     "solhint": "^3.6.2"
@@ -22,10 +25,29 @@
     "build": "forge build",
     "lint": "bun run lint:sol && bun run prettier:check",
     "lint:sol": "forge fmt --check && bun solhint {script,src,test}/**/*.sol",
+    "sol:fmt": "forge fmt",
     "prettier:check": "prettier --check \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
     "prettier:write": "prettier --write \"**/*.{json,md,yml}\" --ignore-path \".prettierignore\"",
     "test": "forge test",
     "test:coverage": "forge coverage",
-    "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage"
+    "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage",
+    "factory:sepolia": "forge script script/XERC20/XERC20Factory.s.sol:XERC20FactoryDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:factory:sepolia": "dotenv-run-script factory:sepolia",
+    "factory:arb:sepolia": "forge script script/XERC20/XERC20Factory.s.sol:XERC20FactoryDeploy -f arbitrum-sepolia -vvvv --broadcast --verify --skip-simulation",
+    "deploy:factory:arb:sepolia": "dotenv-run-script factory:arb:sepolia",
+    "token:sepolia": "forge script script/XERC20/XERC20.s.sol:XERC20Deploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:token:sepolia": "dotenv-run-script token:sepolia",
+    "token:arb:sepolia": "forge script script/XERC20/XERC20.s.sol:XERC20Deploy -f arbitrum-sepolia --broadcast --verify --etherscan-api-key $ARBISCAN_API_KEY --chain arbitrum-sepolia -vvvv",
+    "deploy:token:arb:sepolia": "dotenv-run-script token:arb:sepolia",
+    "gateway:sepolia": "forge script script/L1Gateway.s.sol:L1GatewayDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:gateway:sepolia": "dotenv-run-script gateway:sepolia",
+    "gateway:arb:sepolia": "forge script script/L2Gateway.s.sol:L2GatewayDeploy -f arbitrum-sepolia --broadcast --verify --etherscan-api-key $ARBISCAN_API_KEY --chain arbitrum-sepolia -vvvv",
+    "deploy:gateway:arb:sepolia": "dotenv-run-script gateway:arb:sepolia",
+    "adapter:sepolia": "forge script script/L1Adapter.s.sol:L1AdapterDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:adapter:sepolia": "dotenv-run-script adapter:sepolia",
+    "adapter:arb:sepolia": "forge script script/L2Adapter.s.sol:L2AdapterDeploy -f arbitrum-sepolia --broadcast --verify --etherscan-api-key $ARBISCAN_API_KEY --chain arbitrum-sepolia -vvvv",
+    "deploy:adapter:arb:sepolia": "dotenv-run-script adapter:arb:sepolia",
+    "register:sepolia": "forge script script/L1AdapterRegister.s.sol:L1AdapterRegister -f sepolia --broadcast -vvvv",
+    "run:register:sepolia": "dotenv-run-script register:sepolia"
   }
 }

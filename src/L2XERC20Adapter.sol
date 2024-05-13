@@ -6,7 +6,7 @@ import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
 contract L2XERC20Adapter is XERC20BaseAdapter {
     address public l1Address;
 
-    constructor(address _xerc20, address _l1AdapterOrToken) XERC20BaseAdapter(_xerc20) {
+    constructor(address _xerc20, address _l1AdapterOrToken, address _owner) XERC20BaseAdapter(_xerc20, _owner) {
         l1Address = _l1AdapterOrToken;
     }
 }
