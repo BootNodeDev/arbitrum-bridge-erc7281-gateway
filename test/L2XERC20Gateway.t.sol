@@ -10,15 +10,12 @@ import { AddressAliasHelper } from "@arbitrum/tokenbridge/libraries/AddressAlias
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
-import { L2XERC20Adapter } from "src/L2XERC20Adapter.sol";
-
 import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
 
 contract L2XERC20GatewayTest is Test {
     ArbSysMock public arbSysMock = new ArbSysMock();
 
     XERC20 internal xerc20;
-    L2XERC20Adapter internal adapter;
 
     address internal _owner = makeAddr("owner");
     address internal _user = makeAddr("user");
@@ -40,10 +37,7 @@ contract L2XERC20GatewayTest is Test {
         l2Gateway = new L2XERC20Gateway(l1Counterpart, l2GatewayRouter);
 
         _createXERC20();
-
-        vm.prank(_owner);
-        adapter = new L2XERC20Adapter(address(xerc20), address(l2Gateway), l1Token, _owner);
-        _setBridgeable();
+        bridgeable = address(xerc20);
 
         vm.prank(_owner);
         xerc20.setLimits(address(l2Gateway), 420 ether, 69 ether);
@@ -105,10 +99,6 @@ contract L2XERC20GatewayTest is Test {
 
     function _createXERC20() internal virtual {
         xerc20 = new XERC20("NonArbitrumEnabled", "NON", _owner);
-    }
-
-    function _setBridgeable() internal virtual {
-        bridgeable = address(adapter);
     }
 
     //// shamelessly stolen from @arbitrum

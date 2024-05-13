@@ -17,8 +17,4 @@ contract L2XERC20GatewayArbitrumCompatibleTokenTest is L2XERC20GatewayTest {
         arbEnabledToken = new L2ArbitrumEnabledXERC20("ArbitrumEnabledToken", "AET", _owner, l1Token);
         xerc20 = XERC20(address(arbEnabledToken));
     }
-
-    function _setBridgeable() internal override {
-        bridgeable = address(xerc20);
-    }
 }
