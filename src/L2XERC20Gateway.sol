@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { L2CustomGateway } from "@arbitrum/tokenbridge/arbitrum/gateway/L2CustomGateway.sol";
+import { L2CustomGateway } from "src/vendor/L2CustomGateway.sol";
 
 import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
 
