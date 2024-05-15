@@ -146,10 +146,6 @@ contract L1LockboxGatewayForkingTest is Test {
         address[] memory l1Gateways = new address[](1);
         l1Gateways[0] = address(l1Gateway);
 
-        // deal(_owner, 100 ether);
-        // vm.prank(l1Gateway.owner());
-        // l1Gateway.forceRegisterTokenToL2{ value: 2 ether }(l1Tokens, l2Tokens, maxGas, gasPriceBid, maxSubmissionCost);
-
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
         deal(router.owner(), 100 ether);
         vm.prank(router.owner());
