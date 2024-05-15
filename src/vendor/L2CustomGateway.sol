@@ -66,6 +66,7 @@ contract L2CustomGateway is L2ArbitrumGateway, ICustomGateway {
 
     function registerTokenFromL1(address[] calldata l1Address, address[] calldata l2Address)
         external
+        virtual
         onlyCounterpartGateway
     {
         // we assume both arrays are the same length, safe since its encoded by the L1

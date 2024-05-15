@@ -23,7 +23,7 @@ contract L1LockboxGatewayForkingTest is Test {
     XERC20Lockbox internal lockbox = XERC20Lockbox(payable(0xC8140dA31E6bCa19b287cC35531c2212763C2059));
     IERC20 internal erc20;
     XERC20 internal xerc20;
-    address internal l2TokenAddress = makeAddr("l2TokenAddress");
+    address internal l2TokenAddress;
 
     address internal l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
     address internal l1GatewayRouter = 0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef;
@@ -47,6 +47,8 @@ contract L1LockboxGatewayForkingTest is Test {
         // if enough funds were submitted in order to send/redeem the
         // cross-chain message.
         vm.fee(0);
+
+        l2TokenAddress = address(lockbox.XERC20());
 
         vm.label(l1Inbox, "l1Inbox");
         vm.label(l1GatewayRouter, "l1GatewayRouter");
@@ -91,7 +93,7 @@ contract L1LockboxGatewayForkingTest is Test {
         emit Transfer(address(l1Gateway), address(0), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(address(erc20), _user, _dest, 1_487_345, amountToBridge);
+        emit DepositInitiated(address(erc20), _user, _dest, 1_487_344, amountToBridge);
 
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
 
@@ -144,9 +146,9 @@ contract L1LockboxGatewayForkingTest is Test {
         address[] memory l1Gateways = new address[](1);
         l1Gateways[0] = address(l1Gateway);
 
-        deal(_owner, 100 ether);
-        vm.prank(l1Gateway.owner());
-        l1Gateway.forceRegisterTokenToL2{ value: 2 ether }(l1Tokens, l2Tokens, maxGas, gasPriceBid, maxSubmissionCost);
+        // deal(_owner, 100 ether);
+        // vm.prank(l1Gateway.owner());
+        // l1Gateway.forceRegisterTokenToL2{ value: 2 ether }(l1Tokens, l2Tokens, maxGas, gasPriceBid, maxSubmissionCost);
 
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
         deal(router.owner(), 100 ether);

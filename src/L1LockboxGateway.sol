@@ -17,10 +17,20 @@ contract L1LockboxGateway is XERC20BaseGateway, L1CustomGateway {
     using SafeERC20 for IERC20;
 
     XERC20Lockbox internal lockbox;
+    IERC20 internal l1Token;
+    address internal xerc20;
+
+    error InvalidToken();
+    error NotImplementedFunction();
 
     constructor(address payable _lockbox, address _l1Router, address _inbox, address _owner) {
-        lockbox = XERC20Lockbox(_lockbox);
         address _l2Counterpart = address(this);
+
+        lockbox = XERC20Lockbox(_lockbox);
+        l1Token = lockbox.ERC20();
+        xerc20 = address(lockbox.XERC20());
+        l1ToL2Token[address(l1Token)] = xerc20;
+
         initialize(_l2Counterpart, _l1Router, _inbox, _owner);
     }
 
@@ -33,22 +43,66 @@ contract L1LockboxGateway is XERC20BaseGateway, L1CustomGateway {
         override
         returns (uint256 amountReceived)
     {
-        IERC20 l1Token = lockbox.ERC20();
-        assert(_l1Token == address(l1Token));
+        if (_l1Token != address(l1Token)) revert InvalidToken();
 
         l1Token.safeTransferFrom(_from, address(this), _amount);
         l1Token.approve(address(lockbox), _amount);
         lockbox.deposit(_amount);
-        return _outboundEscrowTransfer(address(lockbox.XERC20()), address(this), _amount);
+        return _outboundEscrowTransfer(xerc20, address(this), _amount);
     }
 
     function inboundEscrowTransfer(address _l1Token, address _dest, uint256 _amount) internal override {
-        IERC20 l1Token = lockbox.ERC20();
-        assert(_l1Token == address(l1Token));
+        if (_l1Token != address(l1Token)) revert InvalidToken();
 
-        address _xerc20 = address(lockbox.XERC20());
-        _inboundEscrowTransfer(_xerc20, address(this), _amount);
-        IERC20(_xerc20).approve(address(lockbox), _amount);
+        _inboundEscrowTransfer(xerc20, address(this), _amount);
+        IERC20(xerc20).approve(address(lockbox), _amount);
         lockbox.withdrawTo(_dest, _amount);
+    }
+
+    function registerTokenToL2(
+        address,
+        uint256,
+        uint256,
+        uint256
+    )
+        external
+        payable
+        virtual
+        override
+        returns (uint256)
+    {
+        revert NotImplementedFunction();
+    }
+
+    function registerTokenToL2(
+        address,
+        uint256,
+        uint256,
+        uint256,
+        address
+    )
+        public
+        payable
+        virtual
+        override
+        returns (uint256)
+    {
+        revert NotImplementedFunction();
+    }
+
+    function forceRegisterTokenToL2(
+        address[] calldata,
+        address[] calldata,
+        uint256,
+        uint256,
+        uint256
+    )
+        external
+        payable
+        virtual
+        override
+        returns (uint256)
+    {
+        revert NotImplementedFunction();
     }
 }
