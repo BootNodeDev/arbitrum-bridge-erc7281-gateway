@@ -135,6 +135,35 @@ contract L1LockboxGatewayForkingTest is Test {
         assertEq(erc20.balanceOf(_dest), balanceBefore + amountToBridge);
     }
 
+    function test_RegisterTokenToL2_NotImplementedFunction(
+        address _l2Address,
+        uint256 _maxGas,
+        uint256 _gasPriceBid,
+        uint256 _maxSubmissionCost,
+        address _creditBackAddress
+    )
+        public
+    {
+        vm.expectRevert(L1LockboxGateway.NotImplementedFunction.selector);
+        l1Gateway.registerTokenToL2(_l2Address, _maxGas, _gasPriceBid, _maxSubmissionCost);
+
+        vm.expectRevert(L1LockboxGateway.NotImplementedFunction.selector);
+        l1Gateway.registerTokenToL2(_l2Address, _maxGas, _gasPriceBid, _maxSubmissionCost, _creditBackAddress);
+    }
+
+    function test_ForceRegisterTokenToL2_NotImplementedFunction(
+        address[] calldata _l1Addresses,
+        address[] calldata _l2Addresses,
+        uint256 _maxGas,
+        uint256 _gasPriceBid,
+        uint256 _maxSubmissionCost
+    )
+        public
+    {
+        vm.expectRevert(L1LockboxGateway.NotImplementedFunction.selector);
+        l1Gateway.forceRegisterTokenToL2(_l1Addresses, _l2Addresses, _maxGas, _gasPriceBid, _maxSubmissionCost);
+    }
+
     ////
     // Helpers
     ////

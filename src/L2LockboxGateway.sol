@@ -17,7 +17,12 @@ contract L2LockboxGateway is L2XERC20Gateway {
 
     error NotImplementedFunction();
 
-    constructor(address _l1Counterpart, address _l2Router, address _l1Token, address _l2Token)
+    constructor(
+        address _l1Counterpart,
+        address _l2Router,
+        address _l1Token,
+        address _l2Token
+    )
         L2XERC20Gateway(_l1Counterpart, _l2Router)
     {
         l1ToL2Token[_l1Token] = _l2Token;
