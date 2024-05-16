@@ -27,7 +27,7 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
      * @dev This function is called inside the `outboundTransferCustomRefund` when the token is being bridged from
      * Ethereum to Arbitrum.
      *
-     * @param _l1Token Address of the XERC20 token
+     * @param _l1TokenOrAdapter Address of the XERC20 token or its adapter
      * @param _from Address of the user sending the tokens to Arbitrum
      * @param _amount Amount of tokens
      */
@@ -46,7 +46,7 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
     /**
      * @dev Logic used when withdrawing tokens from Arbitrum.
      *
-     * @param _l1Token Address of the XERC20 token
+     * @param _l1TokenOrAdapter Address of the XERC20 token or its adapter
      * @param _dest Address of the user receiving the tokens
      * @param _amount Amount of tokens
      */
