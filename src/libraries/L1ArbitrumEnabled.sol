@@ -6,7 +6,7 @@ import { IL1GatewayRouter } from "src/interfaces/IL1GatewayRouter.sol";
 
 /**
  * @title L1ArbitrumEnabled
- * @dev This contract conforms with Arbitrum ICustomToken which is required for tokens to be pensionless registered on
+ * @dev This contract conforms with Arbitrum ICustomToken which is required for tokens to be permissionless registered on
  * Arbitrum Router to be used with a Custom Gateway
  *
  * @author BootNode

@@ -6,7 +6,7 @@ import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 
 /**
  * @title L1XERC20Adapter
- * @dev This contract can be used for pensionless register a non Arbitrum compatible token on the Arbitrum Router to
+ * @dev This contract can be used for permissionless register a non Arbitrum compatible token on the Arbitrum Router to
  * be used with a Custom Gateway.
  * By doing so, take into account that the address of this contract is the one registered on the router, so use that
  * address when calling `L1GatewayRouter.outboundTransferCustomRefund`, also that the user should previously grant
