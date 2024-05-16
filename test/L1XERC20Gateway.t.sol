@@ -7,9 +7,6 @@ import { console2 } from "forge-std/console2.sol";
 import { IInbox } from "@arbitrum/nitro-contracts/src/bridge/IInbox.sol";
 import { InboxMock } from "@arbitrum/tokenbridge/test/InboxMock.sol";
 
-import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
-import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
-
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
 
 contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {

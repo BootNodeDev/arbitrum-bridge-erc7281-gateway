@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { L2CustomGateway } from "src/vendor/L2CustomGateway.sol";
 import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
 
 /**
