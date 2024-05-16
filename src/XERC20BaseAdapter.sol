@@ -16,6 +16,9 @@ import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 abstract contract XERC20BaseAdapter is IXERC20Adapter, ERC165, Ownable {
     address internal xerc20;
 
+    /**
+     * @dev Sets the XERC20 token an the owner of this contract.
+     */
     constructor(address _xerc20, address _owner) {
         // TODO: maybe we should check whether the token is actually an XERC20
         xerc20 = _xerc20;
