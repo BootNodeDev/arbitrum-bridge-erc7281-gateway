@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.25 <0.9.0;
+pragma solidity 0.8.25;
 
 import { Address } from "@openzeppelin/contracts/utils/Address.sol";
 
@@ -10,17 +10,33 @@ import { L2CustomGateway } from "src/vendor/L2CustomGateway.sol";
 import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
 
 /**
- * @title Gateway for xERC20 bridging functionality
+ * @title L2XERC20Gateway
+ * @dev A Custom gateway that allows XERC20 tokens to be bridge through Arbitrum canonical bridge.
+ * This gateway should be set as a bridge for the XER20 token, and the user should previously grant approval to this
+ * contract before sending the tokens to Arbitrum.
+ * Burns L2 XERC20 when sending to Ethereum and mints it when the user sends tokens from Ethereum.
+ *
+ * @author BootNode
  */
 contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
     using Address for address;
 
+    /**
+     * @dev Sets the L1 gateway counterpart and L2 Router.
+     */
     constructor(address _l1Counterpart, address _l2Router) {
         initialize(_l1Counterpart, _l2Router);
     }
 
+    /**
+     * @dev This function is called when initiating a token withdrawal from Arbitrum to Ethereum
+     *
+     * @param _l2Token Address of the XERC20 token
+     * @param _from Address of the user sending the tokens to Ethereum
+     * @param _amount Amount of tokens
+     */
     function outboundEscrowTransfer(
-        address _l2TokenOrAdapter,
+        address _l2Token,
         address _from,
         uint256 _amount
     )
@@ -28,11 +44,18 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
         override
         returns (uint256 amountBurnt)
     {
-        return _outboundEscrowTransfer(_l2TokenOrAdapter, _from, _amount);
+        return _outboundEscrowTransfer(_l2Token, _from, _amount);
     }
 
-    function inboundEscrowTransfer(address _l2TokenOrAdapter, address _dest, uint256 _amount) internal override {
-        _inboundEscrowTransfer(_l2TokenOrAdapter, _dest, _amount);
+    /**
+     * @dev Logic used when receiving tokens from Ethereum.
+     *
+     * @param _l2Token Address of the XERC20 token
+     * @param _dest Address of the user receiving the tokens
+     * @param _amount Amount of tokens
+     */
+    function inboundEscrowTransfer(address _l2Token, address _dest, uint256 _amount) internal override {
+        _inboundEscrowTransfer(_l2Token, _dest, _amount);
     }
 
     /**

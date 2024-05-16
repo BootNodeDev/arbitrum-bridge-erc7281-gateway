@@ -16,10 +16,11 @@
  * limitations under the License.
  */
 
-// This file is a modified version of the Arbitrum L2ArbitrumGateway contract,
-// where the functions `outboundTransfer` and `finalizeInboundTransfer` are
-// marked as `virtual` for overriding in a child contract.
-// Copied from commit b3894ecc8b6185b2d505c71c9a7851725f53df15
+/**
+ * @notice This file is a modified version of the Arbitrum L2ArbitrumGateway contract, where the functions
+ * `outboundTransfer` and `finalizeInboundTransfer` are marked as `virtual` for overriding in a child contract.
+ *  Copied from commit b3894ecc8b6185b2d505c71c9a7851725f53df15
+ */
 
 pragma solidity ^0.8.0;
 

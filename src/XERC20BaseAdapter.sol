@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.25 <0.9.0;
+pragma solidity 0.8.25;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -7,6 +7,12 @@ import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
+/**
+ * @title XERC20BaseAdapter
+ * @dev Base logic for an XERC20 Adapter
+ *
+ * @author BootNode
+ */
 abstract contract XERC20BaseAdapter is IXERC20Adapter, ERC165, Ownable {
     address internal xerc20;
 
