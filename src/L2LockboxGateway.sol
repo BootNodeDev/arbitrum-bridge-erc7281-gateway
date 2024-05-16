@@ -1,20 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
-import { Address } from "@openzeppelin/contracts/utils/Address.sol";
-
-import { GatewayMessageHandler } from "@arbitrum/tokenbridge/libraries/gateway/GatewayMessageHandler.sol";
-
 import { L2CustomGateway } from "src/vendor/L2CustomGateway.sol";
-
 import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
 
 /**
  * @title Gateway for xERC20 bridging functionality
  */
 contract L2LockboxGateway is L2XERC20Gateway {
-    using Address for address;
-
     error NotImplementedFunction();
 
     constructor(
