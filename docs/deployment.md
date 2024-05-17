@@ -18,6 +18,8 @@ only simulate the deployment.
 
 ### Gateways
 
+#### XERC20Gateways
+
 Both gateways are deployed using a `CREATE3Factory` in order to make their addresses equal in both L1 and L2 networks.
 Make sure to use the same `CREATE3_FACTORY`, `GATEWAY_SALT` and `DEPLOYER_PK` values for running both scripts.
 
@@ -69,6 +71,64 @@ Arbitrum One
 
 ```sh
 $ yarn deploy:gateway:arb
+```
+
+#### LockboxGateways
+
+Both gateways are deployed using a `CREATE3Factory` in order to make their addresses equal in both L1 and L2 networks.
+Make sure to use the same `CREATE3_FACTORY`, `GATEWAY_SALT` and `DEPLOYER_PK` values for running both scripts.
+
+Notice that the values used for `GATEWAY_SALT` can be used only once on each network.
+
+**L1LockboxGateway** Required environment variables:
+
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
+  same address for `L2XERC20Gateway`
+- `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
+  `L2XERC20Gateway`
+- `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
+  `L2XERC20Gateway`
+- `L1_GATEWAY_OWNER`: Gateway's owner address
+- `XERC20_LOCKBOX`: Address of the XERC20Lockbox
+- `L1_ARBITRUM_ROUTER`: Use `0xcE18836b233C83325Cc8848CA4487e94C6288264` for deploying on Sepolia
+- `L1_ARBITRUM_INBOX`: Use `0xaAe29B0366299461418F5324a79Afc425BE5ae21` for deploying on Sepolia
+-
+
+Sepolia
+
+```sh
+$ yarn deploy:lockboxGateway:sepolia
+```
+
+Ethereum Mainnet
+
+```sh
+$ yarn deploy:lockboxGateway
+```
+
+**L2LockboxGateway** Required environment variables:
+
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
+  same address for `L1XERC20Gateway`
+- `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
+  `L1XERC20Gateway`
+- `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
+  `L1XERC20Gateway`
+- `L1_GATEWAY`: Address resulting from running `deploy:gateway:sepolia`
+- `L2_ARBITRUM_ROUTER`: Use `0xcE18836b233C83325Cc8848CA4487e94C6288264` for deploying on Arbitrum Sepolia
+- `L1_ERC20`: Address of the ERC20 on L1
+- `L2_XERC20`: Address of the XERC20 on L1
+
+Arbitrum Sepolia
+
+```sh
+$ yarn deploy:lockboxGateway:arb:sepolia
+```
+
+Arbitrum One
+
+```sh
+$ yarn deploy:lockboxGateway:arb
 ```
 
 ### XERC20 and Adapter
