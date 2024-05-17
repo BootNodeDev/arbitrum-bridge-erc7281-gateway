@@ -1,11 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.25 <0.9.0;
+pragma solidity 0.8.25;
 
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
+/**
+ * @title L2ArbitrumEnabledXERC20
+ * @dev Extended version of a XERC20 token conforms with Arbitrum ICustomToken.
+ *
+ * @author BootNode
+ */
 contract L2ArbitrumEnabledXERC20 is XERC20 {
     address public l1Address;
 
+    /**
+     * @dev Sets the token name, symbol, owner and the L1 token counterpart.
+     */
     constructor(
         string memory _name,
         string memory _symbol,

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.25 <0.9.0;
+pragma solidity 0.8.25;
 
 import { ERC165Checker } from "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
@@ -7,6 +7,12 @@ import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
 import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
+/**
+ * @title XERC20BaseGateway
+ * @dev Contains logic shared by both L1 and L2 gateways for minting and burning XERC20 tokens.
+ *
+ * @author BootNode
+ */
 abstract contract XERC20BaseGateway {
     using ERC165Checker for address;
 

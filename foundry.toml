@@ -41,5 +41,5 @@
   localhost = "http://localhost:8545"
   arbitrum = "${ARBITRUM_RPC_URL}"
   mainnet = "${ETH_RPC_URL}"
-  sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
+  sepolia = "${SEPOLIA_RPC_URL}"
   arbitrum-sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
