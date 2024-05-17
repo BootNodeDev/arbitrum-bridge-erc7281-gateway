@@ -1,6 +1,7 @@
 # Arbitrum bridge XERC20
 
-This repo contains a set of smart contracts meant for enabling XERC20 token bridging through Arbitrum canonical bridge, using two different approach:
+This repo contains a set of smart contracts meant for enabling XERC20 token bridging through Arbitrum canonical bridge,
+using two different approach:
 
 ## An ERC20 token on Ethereum with a XERC20 counterpart token on Arbitrum
 
@@ -10,19 +11,24 @@ An example use case for this approach would be ezETH.
 
 ## An XERC20 token on Ethereum with a XERC20 counterpart token on Arbitrum
 
-There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific gateway.
+There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific
+gateway.
 
 First of all, the L1 counterpart of the token must conform to the ICustomToken interface. This means that:
 
 - It must have a isArbitrumEnabled method that returns 0xb1
-- It must have a method that makes an external call to L1CustomGateway.registerCustomL2Token specifying the address of the L2 contract, and to L1GatewayRouter.setGateway specifying the address of the custom gateway. These calls should be made only once to configure the gateway.
+- It must have a method that makes an external call to L1CustomGateway.registerCustomL2Token specifying the address of
+  the L2 contract, and to L1GatewayRouter.setGateway specifying the address of the custom gateway. These calls should be
+  made only once to configure the gateway.
 
-These methods are needed to register the token via the gateway contract. If the L1 contract does not include these methods and it is not upgradeable, registration could alternatively be performed in one of these ways:
+These methods are needed to register the token via the gateway contract. If the L1 contract does not include these
+methods and it is not upgradeable, registration could alternatively be performed in one of these ways:
 
 - As a chain-owner registration via an Arbitrum DAO proposal.
 - By wrapping your L1 token and registering the wrapped version of your token.
 
-This approach uses an Adapter contract which is used for being able permissionless register a non Arbitrum compatible token on the Arbitrum Router to be used with a Custom Gateway
+This approach uses an Adapter contract which is used for being able permissionless register a non Arbitrum compatible
+token on the Arbitrum Router to be used with a Custom Gateway
 
 ![XERC20<>XERC20](/docs/Arbitrum1.png)
 
