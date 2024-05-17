@@ -85,6 +85,7 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
         // the function is marked as payable to conform to the inheritance setup
         // this particular code path shouldn't have a msg.value > 0
         // TODO: remove this invariant for execution markets
+        // solhint-disable-next-line
         require(msg.value == 0, "NO_VALUE");
 
         address _from;
@@ -98,11 +99,13 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
             }
         }
         // the inboundEscrowAndCall functionality has been disabled, so no data is allowed
+        // solhint-disable-next-line
         require(_extraData.length == 0, "EXTRA_DATA_DISABLED");
 
         uint256 id;
         {
             address l2Token = calculateL2TokenAddress(_l1Token);
+            // solhint-disable-next-line
             require(l2Token.isContract(), "TOKEN_NOT_DEPLOYED");
             // ----------------- BEGIN MODIFICATION -----------------
             // As opposed to L2ERC20Gateway (which inherits from L2ArbitrumGateway

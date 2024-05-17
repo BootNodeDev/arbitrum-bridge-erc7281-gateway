@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.25 <0.9.0;
 
+// solhint-disable-next-line
 import { console2 } from "forge-std/console2.sol";
 
 import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";

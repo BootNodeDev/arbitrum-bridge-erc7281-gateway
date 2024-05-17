@@ -12,8 +12,8 @@ import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
 
 /**
  * @title L1LockboxGateway
- * @dev A Custom gateway that allows an ERC20 token which can be deposited on an XERC20 Lockbox to be bridged through the
- * Arbitrum canonical bridge.
+ * @dev A Custom gateway that allows an ERC20 token which can be deposited on an XERC20 Lockbox to be bridged through
+ * the Arbitrum canonical bridge.
  * This gateway should be set as a bridge for the XERC20 token, and the user should previously grant ERC20 approval to
  * this contract before sending the tokens to Arbitrum.
  * It also withdraws the ERC20 form the Lockbox when the user sends tokens from Arbitrum.
@@ -31,7 +31,8 @@ contract L1LockboxGateway is XERC20BaseGateway, L1CustomGateway {
     error NotImplementedFunction();
 
     /**
-     * @dev Sets the lockbox, l1Router, inbox and owner. It also establishes the addresses of both L1 and L2 tokens allowed by
+     * @dev Sets the lockbox, l1Router, inbox and owner. It also establishes the addresses of both L1 and L2 tokens
+     * allowed by
      * this gateway.
      */
     constructor(address payable _lockbox, address _l1Router, address _inbox, address _owner) {

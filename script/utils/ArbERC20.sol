@@ -5,7 +5,6 @@ import { IL1CustomGateway } from "src/interfaces/IL1CustomGateway.sol";
 import { IL1GatewayRouter } from "src/interfaces/IL1GatewayRouter.sol";
 
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 
 contract ArbERC20 is ERC20 {
     address public owner;

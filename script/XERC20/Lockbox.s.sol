@@ -4,8 +4,6 @@ pragma solidity >=0.8.25 <0.9.0;
 import { Script } from "forge-std/Script.sol";
 import { XERC20Factory } from "xerc20/contracts/XERC20Factory.sol";
 
-import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 import { ArbERC20 } from "script/utils/ArbERC20.sol";
 
 contract LockboxDeploy is Script {
