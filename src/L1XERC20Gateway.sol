@@ -7,8 +7,8 @@ import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
 
 /**
  * @title L1XERC20Gateway
- * @dev A Custom gateway that allows XERC20 tokens to be bridge through Arbitrum canonical bridge.
- * This gateway should be set as a bridge for the XER20 token, and the user should previously grant approval to this
+ * @dev A Custom gateway that allows XERC20 tokens to be bridged through the Arbitrum canonical bridge.
+ * This gateway should be set as a bridge for the XERC20 token, and the user should previously grant approval to this
  * contract before sending the tokens to Arbitrum.
  * Burns L1 XERC20 when sending to Arbitrum and mints it when the user sends tokens from Arbitrum.
  *

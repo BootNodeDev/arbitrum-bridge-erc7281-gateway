@@ -3,7 +3,7 @@ pragma solidity 0.8.25;
 
 /**
  * @title IXERC20Adapter
- * @dev The main purpose of this contract is to enable registering a non Arbitrum bridge compatible XERC20 token on
+ * @dev The main purpose of this contract is to enable registering a non Arbitrum bridge compatible XERC20 token on the
  * Arbitrum Bridge Router to be used along with the L1XERC20Gateway for bridging the token to Arbirtrum.
  *
  * @author BootNode

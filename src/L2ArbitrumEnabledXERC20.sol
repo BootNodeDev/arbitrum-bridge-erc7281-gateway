@@ -13,7 +13,7 @@ contract L2ArbitrumEnabledXERC20 is XERC20 {
     address public l1Address;
 
     /**
-     * @dev Sets the token name, symbol and owner, the L1 token counterpart.
+     * @dev Sets the token name, symbol, owner and the L1 token counterpart.
      */
     constructor(
         string memory _name,
