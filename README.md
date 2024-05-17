@@ -1,7 +1,7 @@
 # Arbitrum bridge XERC20
 
-This repo contains a set of smart contracts meant for enabling XERC20 token bridging through the Arbitrum canonical bridge,
-using two different approaches:
+This repo contains a set of smart contracts meant for enabling XERC20 token bridging through the Arbitrum canonical
+bridge, using two different approaches:
 
 ## An ERC20 token on Ethereum with an XERC20 counterpart token on Arbitrum
 
@@ -41,8 +41,8 @@ methods and it is not upgradeable, registration could alternatively be performed
 - As a chain-owner registration via an Arbitrum DAO proposal.
 - By wrapping your L1 token and registering the wrapped version of your token.
 
-This approach uses an Adapter contract which is used for being able to permissionlessly register a non Arbitrum compatible
-token on the Arbitrum Router to be used with a Custom Gateway
+This approach uses an Adapter contract which is used for being able to permissionlessly register a non Arbitrum
+compatible token on the Arbitrum Router to be used with a Custom Gateway
 
 In order to be able to use this approach it would be required to:
 
