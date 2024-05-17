@@ -65,6 +65,10 @@ In order to be able to use this approach it would be required to:
 
 ![XERC20<>XERC20](/docs/Arbitrum1.png)
 
+## Deployment Scripts
+
+Deployment script documentation can be found [here](./docs/deployment.md).
+
 ## Installing Dependencies
 
 Foundry typically uses git submodules to manage dependencies, but this template uses Node.js packages because
@@ -78,10 +82,6 @@ This is how to install dependencies:
    `dependency-name=node_modules/dependency-name`
 
 Note that OpenZeppelin Contracts is pre-installed, so you can follow that as an example.
-
-## Deployment Scripts
-
-Deployment script documentation can be found [here](./docs/deployment.md).
 
 ## Usage
 
