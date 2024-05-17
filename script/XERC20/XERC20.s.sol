@@ -15,7 +15,7 @@ contract XERC20Deploy is Script {
         uint256[] memory limits = vm.envOr("XERC20_BURN_MINT_LIMITS", ",", new uint256[](0));
         address[] memory bridges = vm.envOr("XERC20_BRIDGES", ",", new address[](0));
 
-        limits[0] = type(uint256).max / 2;
+        // limits[0] = type(uint256).max / 2;
 
         vm.startBroadcast(deployerPrivateKey);
 

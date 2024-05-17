@@ -45,9 +45,15 @@
     "deploy:gateway:arb:sepolia": "dotenv-run-script gateway:arb:sepolia",
     "adapter:sepolia": "forge script script/L1Adapter.s.sol:L1AdapterDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
     "deploy:adapter:sepolia": "dotenv-run-script adapter:sepolia",
-    "adapter:arb:sepolia": "forge script script/L2Adapter.s.sol:L2AdapterDeploy -f arbitrum-sepolia --broadcast --verify --etherscan-api-key $ARBISCAN_API_KEY --chain arbitrum-sepolia -vvvv",
-    "deploy:adapter:arb:sepolia": "dotenv-run-script adapter:arb:sepolia",
     "register:sepolia": "forge script script/L1AdapterRegister.s.sol:L1AdapterRegister -f sepolia --broadcast -vvvv",
-    "run:register:sepolia": "dotenv-run-script register:sepolia"
+    "run:register:sepolia": "dotenv-run-script register:sepolia",
+    "lockboxGateway:sepolia": "forge script script/L1LockboxGateway.s.sol:L1GatewayDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:lockboxGateway:sepolia": "dotenv-run-script lockboxGateway:sepolia",
+    "lockboxGateway:arb:sepolia": "forge script script/L2LockboxGateway.s.sol:L2GatewayDeploy -f arbitrum-sepolia --broadcast --verify --etherscan-api-key $ARBISCAN_API_KEY --chain arbitrum-sepolia -vvvv",
+    "deploy:lockboxGateway:arb:sepolia": "dotenv-run-script lockboxGateway:arb:sepolia",
+    "lockbox:sepolia": "forge script script/XERC20/Lockbox.s.sol:LockboxDeploy -f sepolia --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY --chain sepolia -vvvv",
+    "deploy:lockbox:sepolia": "dotenv-run-script lockbox:sepolia",
+    "register:erc20:sepolia": "forge script script/XERC20/ERC20Register.s.sol:ERC20Register -f sepolia --broadcast -vvvv",
+    "run:register:erc20:sepolia": "dotenv-run-script register:erc20:sepolia"
   }
 }
