@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.25;
 
 import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
