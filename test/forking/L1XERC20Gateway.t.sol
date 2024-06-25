@@ -6,6 +6,8 @@ import { console2 } from "forge-std/console2.sol";
 
 import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
 import { ICustomToken } from "@arbitrum/tokenbridge/ethereum/ICustomToken.sol";
+import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
+import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
 
@@ -13,6 +15,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     uint256 internal mainnetFork;
 
     address internal l2TokenAddress = makeAddr("l2TokenAddress");
+    address internal _attacker = makeAddr("attacker");
 
     uint256 public maxSubmissionCost = 20;
     uint256 public maxGas = 1_000_000_000;
@@ -36,6 +39,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
 
         deal(_owner, 100 ether);
+        deal(_attacker, 100 ether);
 
         super.setUp();
         bridgeable = address(adapter);
@@ -58,6 +62,27 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
         assertEq(router.getGateway(bridgeable), address(l1Gateway));
         assertEq(router.calculateL2TokenAddress(bridgeable), l2TokenAddress);
+    }
+
+    function test_RegisterTokenToL2_AlreadyRegisteredToken() public {
+        test_RegisterTokenOnL2();
+
+        vm.prank(_attacker);
+        L1XERC20Adapter fakeAdapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway), _attacker);
+
+        vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredToken.selector);
+        vm.prank(_attacker);
+        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: 3 ether }(
+            makeAddr("fakeL2TokenAddress"),
+            maxSubmissionCost,
+            maxSubmissionCost,
+            maxGas,
+            maxGas,
+            gasPriceBid,
+            retryableCost,
+            retryableCost,
+            _attacker
+        );
     }
 
     function test_OutboundTransferCustomRefund() public {

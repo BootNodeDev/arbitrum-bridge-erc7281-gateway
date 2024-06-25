@@ -5,6 +5,8 @@ import { L1CustomGateway } from "@arbitrum/tokenbridge/ethereum/gateway/L1Custom
 
 import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
 
+import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
+
 /**
  * @title L1XERC20Gateway
  * @dev A Custom gateway that allows XERC20 tokens to be bridged through the Arbitrum canonical bridge.
@@ -15,6 +17,11 @@ import { XERC20BaseGateway } from "src/XERC20BaseGateway.sol";
  * @author BootNode
  */
 contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
+    // stores addresses of registered tokens
+    mapping(address => bool) public registeredTokens;
+
+    error AlreadyRegisteredToken();
+
     /**
      * @dev Sets the arbitrum router, inbox and the owner of this contract.
      */
@@ -52,5 +59,34 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
      */
     function inboundEscrowTransfer(address _l1TokenOrAdapter, address _dest, uint256 _amount) internal override {
         _inboundEscrowTransfer(_l1TokenOrAdapter, _dest, _amount);
+    }
+
+    /**
+     * @notice Override L1CustomGateway function for validating already registered tokens.
+     */
+    function registerTokenToL2(
+        address _l2Address,
+        uint256 _maxGas,
+        uint256 _gasPriceBid,
+        uint256 _maxSubmissionCost,
+        address _creditBackAddress
+    )
+        public
+        payable
+        virtual
+        override
+        returns (uint256)
+    {
+        address _token = msg.sender;
+
+        if (addressIsAdapter(msg.sender)) {
+            _token = IXERC20Adapter(_token).getXERC20();
+        }
+
+        if (registeredTokens[_token]) revert AlreadyRegisteredToken();
+
+        registeredTokens[_token] = true;
+
+        return _registerTokenToL2(_l2Address, _maxGas, _gasPriceBid, _maxSubmissionCost, _creditBackAddress, msg.value);
     }
 }
