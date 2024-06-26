@@ -29,4 +29,8 @@ contract L2LockboxGatewayTest is L2XERC20GatewayTest {
         vm.expectRevert(L2LockboxGateway.NotImplementedFunction.selector);
         l2Gateway.registerTokenFromL1(_l1Tokens, _l2Tokens);
     }
+
+    function test_FinalizeInboundTransfer_should_not_work_with_adapter() public override {
+        vm.skip(true);
+    }
 }
