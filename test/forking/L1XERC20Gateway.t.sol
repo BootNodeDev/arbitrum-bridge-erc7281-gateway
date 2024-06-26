@@ -4,6 +4,8 @@ pragma solidity >=0.8.25 <0.9.0;
 // solhint-disable-next-line
 import { console2 } from "forge-std/console2.sol";
 
+import { XERC20 } from "xerc20/contracts/XERC20.sol";
+
 import { L1GatewayRouter } from "@arbitrum/tokenbridge/ethereum/gateway/L1GatewayRouter.sol";
 import { ICustomToken } from "@arbitrum/tokenbridge/ethereum/ICustomToken.sol";
 import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
@@ -64,16 +66,40 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         assertEq(router.calculateL2TokenAddress(bridgeable), l2TokenAddress);
     }
 
-    function test_RegisterTokenToL2_AlreadyRegisteredToken() public {
+    function test_RegisterTokenToL2_AlreadyRegisteredL1Token() public {
         test_RegisterTokenOnL2();
 
         vm.prank(_attacker);
         L1XERC20Adapter fakeAdapter = new L1XERC20Adapter(address(xerc20), address(l1Gateway), _attacker);
 
-        vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredToken.selector);
+        vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredL1Token.selector);
         vm.prank(_attacker);
         ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: 3 ether }(
             makeAddr("fakeL2TokenAddress"),
+            maxSubmissionCost,
+            maxSubmissionCost,
+            maxGas,
+            maxGas,
+            gasPriceBid,
+            retryableCost,
+            retryableCost,
+            _attacker
+        );
+    }
+
+    function test_RegisterTokenToL2_AlreadyRegisteredL2Token() public {
+        test_RegisterTokenOnL2();
+
+        vm.prank(_attacker);
+        XERC20 fakeXerc20 = new XERC20("Fake", "FAKE", _attacker);
+
+        vm.prank(_attacker);
+        L1XERC20Adapter fakeAdapter = new L1XERC20Adapter(address(fakeXerc20), address(l1Gateway), _attacker);
+
+        vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredL2Token.selector);
+        vm.prank(_attacker);
+        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: 3 ether }(
+            l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
             maxGas,
