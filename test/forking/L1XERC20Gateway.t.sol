@@ -35,7 +35,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         l1GatewayRouter = 0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef;
         l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
 
-        deal(_owner, 100 ether);
+        deal(_owner, 100 ether + retryableCost * 2);
 
         super.setUp();
         bridgeable = address(adapter);
@@ -43,7 +43,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
     function test_RegisterTokenOnL2() public {
         vm.prank(_owner);
-        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: retryableCost * 2 }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -62,7 +62,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
     function test_OutboundTransferCustomRefund() public {
         vm.prank(_owner);
-        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: retryableCost * 2 }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -103,6 +103,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     event DepositInitiated(
         address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount
     );
+
 
     ////
     // Error declarations for easier debugging
