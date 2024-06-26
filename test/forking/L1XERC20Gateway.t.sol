@@ -104,7 +104,6 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount
     );
 
-
     ////
     // Error declarations for easier debugging
     ///

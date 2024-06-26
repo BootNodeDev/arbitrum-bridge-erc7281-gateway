@@ -8,7 +8,6 @@ import { console2 } from "forge-std/console2.sol";
 
 import { L1ArbitrumEnabledXERC20 } from "src/L1ArbitrumEnabledXERC20.sol";
 import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
-import { IL1CustomGateway } from "src/interfaces/IL1CustomGateway.sol";
 
 import { GatewayMock } from "test/mocks/GatewayMock.sol";
 import { RouterMock } from "test/mocks/RouterMock.sol";
@@ -22,8 +21,8 @@ contract L1XERC20AdapterTest is Test {
         gateway = new GatewayMock();
 
         arbEnabledToken = new L1ArbitrumEnabledXERC20("ArbitrumEnabledToken", "AET", _owner, address(gateway));
-
     }
+
     function test_IsArbitrumEnabled() public view {
         assertEq(arbEnabledToken.isArbitrumEnabled(), uint8(0xb1));
     }
@@ -38,29 +37,13 @@ contract L1XERC20AdapterTest is Test {
         vm.prank(_owner);
         vm.expectRevert(L1ArbitrumEnabled.WrongValue.selector);
         arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter - 1 }(
-            makeAddr("l2Token"),
-            0,
-            0,
-            0,
-            0,
-            0,
-            valueForGateway,
-            valueForRouter,
-            makeAddr("creditBack")
+            makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
 
         vm.prank(_owner);
         vm.expectRevert(L1ArbitrumEnabled.WrongValue.selector);
         arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter + 1 }(
-            makeAddr("l2Token"),
-            0,
-            0,
-            0,
-            0,
-            0,
-            valueForGateway,
-            valueForRouter,
-            makeAddr("creditBack")
+            makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
     }
 
@@ -77,18 +60,8 @@ contract L1XERC20AdapterTest is Test {
         vm.expectCall(address(gateway), valueForGateway, abi.encodePacked(GatewayMock.registerTokenToL2.selector));
         vm.expectCall(address(gateway), abi.encodePacked(GatewayMock.router.selector));
         vm.expectCall(router, valueForRouter, abi.encodePacked(RouterMock.setGateway.selector));
-        arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter}(
-            makeAddr("l2Token"),
-            0,
-            0,
-            0,
-            0,
-            0,
-            valueForGateway,
-            valueForRouter,
-            makeAddr("creditBack")
+        arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter }(
+            makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
-
-
     }
 }

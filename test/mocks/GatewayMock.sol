@@ -5,6 +5,7 @@ import { RouterMock } from "./RouterMock.sol";
 
 contract GatewayMock {
     RouterMock internal routerContract;
+
     constructor() {
         routerContract = new RouterMock();
     }
@@ -12,5 +13,8 @@ contract GatewayMock {
     function registerTokenToL2(address, uint256, uint256, uint256, address) public payable returns (uint256) {
         return 1;
     }
-    function router() public view returns(address) { return address(routerContract); }
+
+    function router() public view returns (address) {
+        return address(routerContract);
+    }
 }
