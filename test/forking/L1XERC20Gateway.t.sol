@@ -40,7 +40,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         l1GatewayRouter = 0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef;
         l1Inbox = 0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f;
 
-        deal(_owner, 100 ether);
+        deal(_owner, 100 ether + retryableCost * 2);
         deal(_attacker, 100 ether);
 
         super.setUp();
@@ -49,7 +49,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
     function test_RegisterTokenOnL2() public {
         vm.prank(_owner);
-        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: retryableCost * 2 }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -74,7 +74,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
         vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredL1Token.selector);
         vm.prank(_attacker);
-        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: retryableCost * 2 }(
             makeAddr("fakeL2TokenAddress"),
             maxSubmissionCost,
             maxSubmissionCost,
@@ -98,7 +98,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
         vm.expectRevert(L1XERC20Gateway.AlreadyRegisteredL2Token.selector);
         vm.prank(_attacker);
-        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(address(fakeAdapter)).registerTokenOnL2{ value: retryableCost * 2 }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
@@ -113,7 +113,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
 
     function test_OutboundTransferCustomRefund() public {
         vm.prank(_owner);
-        ICustomToken(bridgeable).registerTokenOnL2{ value: 3 ether }(
+        ICustomToken(bridgeable).registerTokenOnL2{ value: retryableCost * 2 }(
             l2TokenAddress,
             maxSubmissionCost,
             maxSubmissionCost,
