@@ -12,7 +12,7 @@ import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 import { GatewayMock } from "test/mocks/GatewayMock.sol";
 import { RouterMock } from "test/mocks/RouterMock.sol";
 
-contract L1XERC20AdapterTest is Test {
+contract L1ArbitrumEnabledXERC20Test is Test {
     GatewayMock internal gateway;
     L1ArbitrumEnabledXERC20 internal arbEnabledToken;
     address internal _owner = makeAddr("owner");
