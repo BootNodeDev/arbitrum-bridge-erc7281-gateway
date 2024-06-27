@@ -23,6 +23,17 @@ contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
         assertEq(L1XERC20Adapter(_adapter).isArbitrumEnabled(), uint8(0xb1));
     }
 
+    function test_registerTokenOnL2_OnlyOwner() public {
+        address caller = makeAddr("someOther");
+        deal(caller, 2);
+
+        vm.prank(caller);
+        vm.expectRevert("Ownable: caller is not the owner");
+        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: 2 }(
+            makeAddr("l2Token"), 0, 0, 0, 0, 0, 1, 1, makeAddr("creditBack")
+        );
+    }
+
     function test_registerTokenOnL2_WrongValue(uint256 valueForGateway, uint256 valueForRouter) public {
         // bound to avoid overflow or underflow
         valueForGateway = bound(valueForGateway, 1, 1e36);

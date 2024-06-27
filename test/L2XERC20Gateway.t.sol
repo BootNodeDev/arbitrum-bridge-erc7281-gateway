@@ -14,7 +14,7 @@ import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
 import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
 
 contract MockAdapter is XERC20BaseAdapter {
-    constructor(address _xerc20, address _owner) XERC20BaseAdapter(_xerc20, _owner) { }
+    constructor(address _xerc20, address _owner) XERC20BaseAdapter(_xerc20) { }
 }
 
 contract L2XERC20GatewayTest is Test {
