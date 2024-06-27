@@ -15,11 +15,19 @@ import { IL1GatewayRouter } from "src/interfaces/IL1GatewayRouter.sol";
 abstract contract L1ArbitrumEnabled {
     address internal gatewayAddress;
 
+    error WrongValue();
+
     /**
      * @dev Sets the address of the gateway to be used for bridging
      */
     constructor(address _gatewayAddress) {
         gatewayAddress = _gatewayAddress;
+    }
+
+    modifier checkValue(uint256 _value) {
+        if (_value != msg.value) revert WrongValue();
+
+        _;
     }
 
     /**

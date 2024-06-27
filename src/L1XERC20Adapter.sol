@@ -55,6 +55,7 @@ contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
         payable
         override
         onlyOwner
+        checkValue(valueForGateway + valueForRouter)
     {
         _registerTokenOnL2(
             l2TokenAddress,

@@ -53,6 +53,7 @@ contract L1ArbitrumEnabledXERC20 is XERC20, L1ArbitrumEnabled {
         payable
         override
         onlyOwner
+        checkValue(valueForGateway + valueForRouter)
     {
         _registerTokenOnL2(
             l2TokenAddress,

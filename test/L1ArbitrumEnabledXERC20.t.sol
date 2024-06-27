@@ -1,26 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.25 <0.9.0;
 
+import { Test } from "forge-std/Test.sol";
+
 // solhint-disable-next-line
 import { console2 } from "forge-std/console2.sol";
 
-import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
+import { L1ArbitrumEnabledXERC20 } from "src/L1ArbitrumEnabledXERC20.sol";
 import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 
-import { XERC20BaseAdapterTest } from "test/XERC20BaseAdapterTest.t.sol";
 import { GatewayMock } from "test/mocks/GatewayMock.sol";
 import { RouterMock } from "test/mocks/RouterMock.sol";
 
-contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
+contract L1ArbitrumEnabledXERC20Test is Test {
     GatewayMock internal gateway;
+    L1ArbitrumEnabledXERC20 internal arbEnabledToken;
+    address internal _owner = makeAddr("owner");
 
-    function setUp() public override {
+    function setUp() public {
         gateway = new GatewayMock();
-        super.setUp();
+
+        arbEnabledToken = new L1ArbitrumEnabledXERC20("ArbitrumEnabledToken", "AET", _owner, address(gateway));
     }
 
     function test_IsArbitrumEnabled() public view {
-        assertEq(L1XERC20Adapter(_adapter).isArbitrumEnabled(), uint8(0xb1));
+        assertEq(arbEnabledToken.isArbitrumEnabled(), uint8(0xb1));
     }
 
     function test_registerTokenOnL2_WrongValue(uint256 valueForGateway, uint256 valueForRouter) public {
@@ -32,13 +36,13 @@ contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
 
         vm.prank(_owner);
         vm.expectRevert(L1ArbitrumEnabled.WrongValue.selector);
-        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: valueForGateway + valueForRouter - 1 }(
+        arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter - 1 }(
             makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
 
         vm.prank(_owner);
         vm.expectRevert(L1ArbitrumEnabled.WrongValue.selector);
-        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: valueForGateway + valueForRouter + 1 }(
+        arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter + 1 }(
             makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
     }
@@ -56,12 +60,8 @@ contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
         vm.expectCall(address(gateway), valueForGateway, abi.encodePacked(GatewayMock.registerTokenToL2.selector));
         vm.expectCall(address(gateway), abi.encodePacked(GatewayMock.router.selector));
         vm.expectCall(router, valueForRouter, abi.encodePacked(RouterMock.setGateway.selector));
-        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: valueForGateway + valueForRouter }(
+        arbEnabledToken.registerTokenOnL2{ value: valueForGateway + valueForRouter }(
             makeAddr("l2Token"), 0, 0, 0, 0, 0, valueForGateway, valueForRouter, makeAddr("creditBack")
         );
-    }
-
-    function _createAdapter() internal override {
-        _adapter = address(new L1XERC20Adapter(address(xerc20), address(gateway), _owner));
     }
 }
