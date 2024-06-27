@@ -19,7 +19,7 @@ contract L1XERC20AdapterTest is XERC20BaseAdapterTest {
 
         vm.prank(caller);
         vm.expectRevert("Ownable: caller is not the owner");
-        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: 2}(
+        L1XERC20Adapter(_adapter).registerTokenOnL2{ value: 2 }(
             makeAddr("l2Token"), 0, 0, 0, 0, 0, 1, 1, makeAddr("creditBack")
         );
     }
