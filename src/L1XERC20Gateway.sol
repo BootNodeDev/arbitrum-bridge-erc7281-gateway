@@ -72,14 +72,7 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
         l1RegisteredTokens[_l1Token] = true;
         l2RegisteredTokens[_l2Address] = true;
 
-        return _registerTokenToL2(
-            _l2Address,
-            _maxGas,
-            _gasPriceBid,
-            _maxSubmissionCost,
-            _creditBackAddress,
-            msg.value
-        );
+        return _registerTokenToL2(_l2Address, _maxGas, _gasPriceBid, _maxSubmissionCost, _creditBackAddress, msg.value);
     }
 
     /**
@@ -93,11 +86,18 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
         uint256 _maxGas,
         uint256 _gasPriceBid,
         uint256 _maxSubmissionCost
-    ) external payable virtual override onlyOwner returns (uint256) {
+    )
+        external
+        payable
+        virtual
+        override
+        onlyOwner
+        returns (uint256)
+    {
         if (_l1Addresses.length != _l2Addresses.length) revert InvalidLengths();
 
         address _l1Token;
-        for (uint i = 0; i < _l1Addresses.length; i++) {
+        for (uint256 i = 0; i < _l1Addresses.length; i++) {
             _l1Token = _l1Addresses[i];
 
             if (addressIsAdapter(_l1Addresses[i])) {
@@ -109,15 +109,7 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
             l2RegisteredTokens[_l2Addresses[i]] = true;
         }
 
-        return
-            _forceRegisterTokenToL2(
-                _l1Addresses,
-                _l2Addresses,
-                _maxGas,
-                _gasPriceBid,
-                _maxSubmissionCost,
-                msg.value
-            );
+        return _forceRegisterTokenToL2(_l1Addresses, _l2Addresses, _maxGas, _gasPriceBid, _maxSubmissionCost, msg.value);
     }
 
     /**

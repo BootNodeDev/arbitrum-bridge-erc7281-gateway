@@ -12,7 +12,7 @@ import { L1XERC20Adapter } from "src/L1XERC20Adapter.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
-import {AttackerAdapter} from "test/mocks/AttackerAdapter.sol";
+import { AttackerAdapter } from "test/mocks/AttackerAdapter.sol";
 
 contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     uint256 internal mainnetFork;
@@ -156,7 +156,13 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         deal(attacker, 10 ether);
         vm.prank(attacker);
         router.outboundTransferCustomRefund{ value: 3 ether }(
-            address(attackerAdapter), attacker, _attacker, amountToBridge, maxGas, gasPriceBid, abi.encode(maxSubmissionCost, "")
+            address(attackerAdapter),
+            attacker,
+            _attacker,
+            amountToBridge,
+            maxGas,
+            gasPriceBid,
+            abi.encode(maxSubmissionCost, "")
         );
 
         assertEq(fakeXerc20.balanceOf(attacker), balanceFakeBefore - amountToBridge);

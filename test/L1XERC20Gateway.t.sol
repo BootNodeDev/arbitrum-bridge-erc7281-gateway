@@ -12,7 +12,7 @@ import { L2CustomGateway } from "@arbitrum/tokenbridge/arbitrum/gateway/L2Custom
 import { L1XERC20BaseGatewayTest } from "test/L1XERC20BaseGatewayTest.t.sol";
 import { L1XERC20Gateway } from "src/L1XERC20Gateway.sol";
 
-import {AttackerAdapter} from "test/mocks/AttackerAdapter.sol";
+import { AttackerAdapter } from "test/mocks/AttackerAdapter.sol";
 
 contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
     function setUp() public override {
@@ -32,7 +32,6 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
 
         vm.prank(_owner);
         l1Gateway.forceRegisterTokenToL2{ value: 2 }(l1Addresses, l2Addresses, 1, 1, 1);
-
     }
 
     function test_AddressIsAdapter() public view {
@@ -53,26 +52,18 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         vm.expectRevert("ONLY_OWNER");
         l1Gateway.forceRegisterTokenToL2{ value: 2 }(l1Addresses, l2Addresses, 1, 1, 1);
     }
+
     function test_forceRegisterTokenToL2() public {
         address[] memory l1Addresses = new address[](1);
         l1Addresses[0] = address(adapter);
         address[] memory l2Addresses = new address[](1);
         l2Addresses[0] = makeAddr("l2Token");
 
-        bytes memory _data = abi.encodeWithSelector(
-            L2CustomGateway.registerTokenFromL1.selector,
-            l1Addresses,
-            l2Addresses
-        );
+        bytes memory _data =
+            abi.encodeWithSelector(L2CustomGateway.registerTokenFromL1.selector, l1Addresses, l2Addresses);
 
         vm.expectEmit(true, true, true, true, l1Inbox);
-        emit InboxRetryableTicket(
-            address(l1Gateway),
-            address(l1Gateway.counterpartGateway()),
-            0,
-            1,
-            _data
-        );
+        emit InboxRetryableTicket(address(l1Gateway), address(l1Gateway.counterpartGateway()), 0, 1, _data);
 
         deal(_owner, 2);
         vm.prank(_owner);
@@ -113,6 +104,7 @@ contract L1XERC20GatewayTest is L1XERC20BaseGatewayTest {
         vm.expectRevert(L1XERC20Gateway.NotRegisteredToken.selector);
         l1Gateway.finalizeInboundTransfer(address(adapter), _user, _dest, amountToBridge, data);
     }
+
     function test_inboundEscrowTransfer_uses_registered_adapterToToken() public {
         address attacker = makeAddr("attacker");
         XERC20 fakeXerc20 = new XERC20("FAKE", "FAKE", attacker);
