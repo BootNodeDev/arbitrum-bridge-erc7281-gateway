@@ -25,8 +25,7 @@ order for Renzo to enable bridging the ezETH token it would need to:
 
 ## An XERC20 token on Ethereum with a XERC20 counterpart token on Arbitrum
 
-There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific
-gateway.
+There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific gateway.
 
 First of all, the L1 counterpart of the token must conform to the ICustomToken interface. This means that:
 

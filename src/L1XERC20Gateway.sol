@@ -22,11 +22,14 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
     using ERC165Checker for address;
 
     // stores addresses of registered tokens
+    mapping(address => address) public adapterToToken;
     mapping(address => bool) public l1RegisteredTokens;
     mapping(address => bool) public l2RegisteredTokens;
 
     error AlreadyRegisteredL1Token();
     error AlreadyRegisteredL2Token();
+    error InvalidLengths();
+    error NotRegisteredToken();
 
     /**
      * @dev Sets the arbitrum router, inbox and the owner of this contract.
@@ -56,19 +59,57 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
         override
         returns (uint256)
     {
-        address _token = msg.sender;
+        address _l1Token = msg.sender;
 
         if (addressIsAdapter(msg.sender)) {
-            _token = IXERC20Adapter(_token).getXERC20();
+            _l1Token = IXERC20Adapter(_l1Token).getXERC20();
         }
 
-        if (l1RegisteredTokens[_token]) revert AlreadyRegisteredL1Token();
+        if (l1RegisteredTokens[_l1Token]) revert AlreadyRegisteredL1Token();
         if (l2RegisteredTokens[_l2Address]) revert AlreadyRegisteredL2Token();
 
-        l1RegisteredTokens[_token] = true;
+        adapterToToken[msg.sender] = _l1Token;
+        l1RegisteredTokens[_l1Token] = true;
         l2RegisteredTokens[_l2Address] = true;
 
         return _registerTokenToL2(_l2Address, _maxGas, _gasPriceBid, _maxSubmissionCost, _creditBackAddress, msg.value);
+    }
+
+    /**
+     * @notice Override L1CustomGateway function setting l1RegisteredTokens and l2RegisteredTokens.
+     * It assumes the owner checked both addresses offchain before force registering. Multi-sig or governance is
+     * recommended be used as the owner
+     */
+    function forceRegisterTokenToL2(
+        address[] calldata _l1Addresses,
+        address[] calldata _l2Addresses,
+        uint256 _maxGas,
+        uint256 _gasPriceBid,
+        uint256 _maxSubmissionCost
+    )
+        external
+        payable
+        virtual
+        override
+        onlyOwner
+        returns (uint256)
+    {
+        if (_l1Addresses.length != _l2Addresses.length) revert InvalidLengths();
+
+        address _l1Token;
+        for (uint256 i = 0; i < _l1Addresses.length; i++) {
+            _l1Token = _l1Addresses[i];
+
+            if (addressIsAdapter(_l1Addresses[i])) {
+                _l1Token = IXERC20Adapter(_l1Token).getXERC20();
+            }
+
+            adapterToToken[_l1Addresses[i]] = _l1Token;
+            l1RegisteredTokens[_l1Token] = true;
+            l2RegisteredTokens[_l2Addresses[i]] = true;
+        }
+
+        return _forceRegisterTokenToL2(_l1Addresses, _l2Addresses, _maxGas, _gasPriceBid, _maxSubmissionCost, msg.value);
     }
 
     /**
@@ -88,11 +129,9 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
         override
         returns (uint256 amountReceived)
     {
-        address _token = _l1TokenOrAdapter;
+        address _token = adapterToToken[_l1TokenOrAdapter];
 
-        if (addressIsAdapter(_l1TokenOrAdapter)) {
-            _token = IXERC20Adapter(_l1TokenOrAdapter).getXERC20();
-        }
+        if (_token == address(0)) revert NotRegisteredToken();
 
         return _outboundEscrowTransfer(_token, _from, _amount);
     }
@@ -105,11 +144,9 @@ contract L1XERC20Gateway is XERC20BaseGateway, L1CustomGateway {
      * @param _amount Amount of tokens
      */
     function inboundEscrowTransfer(address _l1TokenOrAdapter, address _dest, uint256 _amount) internal override {
-        address _token = _l1TokenOrAdapter;
+        address _token = adapterToToken[_l1TokenOrAdapter];
 
-        if (addressIsAdapter(_l1TokenOrAdapter)) {
-            _token = IXERC20Adapter(_l1TokenOrAdapter).getXERC20();
-        }
+        if (_token == address(0)) revert NotRegisteredToken();
 
         _inboundEscrowTransfer(_token, _dest, _amount);
     }
