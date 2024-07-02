@@ -17,7 +17,7 @@ import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
  * Burns L1 XERC20 when sending to Arbitrum and mints it when the user sends tokens from Arbitrum.
  *
  * This contract facilitates the bridging of multiple token pairs, enhancing the user experience for token issuers by
- * allowing them to deploy just one smart contract (L1XERCAdapter) rather than three (L1XERCAdapter, L1XERC20Gateway
+ * allowing them to deploy just one smart contract (L1XERC20Adapter) rather than three (L1XERC20Adapter, L1XERC20Gateway
  * and L2XERC20Gateway). The primary trade-off is that issuers of XERC20 tokens must ensure the `registerTokenToL2`
  * function is properly executed by their L1XERC20Adapter before they set minting and burning limits for this contract.
  *
