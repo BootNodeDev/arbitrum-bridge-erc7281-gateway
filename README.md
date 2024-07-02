@@ -57,7 +57,8 @@ In order to be able to use this approach it would be required to:
 
 1. Deploy an `L1XERC20Adapter` if the XERC20 token
 2. Call the `registerTokenOnL2` function on the deployed `L1XERC20Adapter`
-3. Set the `L1XERC20Gateway` as a `bridge` on the XERC20 token. **WARNING:** Token issuer must ensure the previous step was properly executed before this one.
+3. Set the `L1XERC20Gateway` as a `bridge` on the XERC20 token. **WARNING:** Token issuer must ensure the previous step
+   was properly executed before this one.
 4. Make a PR to [Arbitrum's UI repository](https://github.com/OffchainLabs/arbitrum-token-bridge) adding the L2 XERC20
    token to
    [L2ApprovalUtils](https://github.com/OffchainLabs/arbitrum-token-bridge/blob/master/packages/arb-token-bridge-ui/src/util/L2ApprovalUtils.ts)
