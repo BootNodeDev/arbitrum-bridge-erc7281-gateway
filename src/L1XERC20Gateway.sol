@@ -11,10 +11,15 @@ import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
 
 /**
  * @title L1XERC20Gateway
- * @dev A Custom gateway that allows XERC20 tokens to be bridged through the Arbitrum canonical bridge.
+ * @notice A Custom gateway that allows XERC20 tokens to be bridged through the Arbitrum canonical bridge.
  * This gateway should be set as a bridge for the XERC20 token, and the user should previously grant approval to this
  * contract before sending the tokens to Arbitrum.
  * Burns L1 XERC20 when sending to Arbitrum and mints it when the user sends tokens from Arbitrum.
+ *
+ * This contract facilitates the bridging of multiple token pairs, enhancing the user experience for token issuers by
+ * allowing them to deploy just one smart contract (L1XERCAdapter) rather than three (L1XERCAdapter, L1XERC20Gateway
+ * and L2XERC20Gateway). The primary trade-off is that issuers of XERC20 tokens must ensure the `registerTokenToL2`
+ * function is properly executed by their L1XERC20Adapter before they set minting and burning limits for this contract.
  *
  * @author BootNode
  */
