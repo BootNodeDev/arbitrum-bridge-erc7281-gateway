@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.25;
 
-import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
@@ -13,16 +12,14 @@ import { IXERC20Adapter } from "src/interfaces/IXERC20Adapter.sol";
  *
  * @author BootNode
  */
-abstract contract XERC20BaseAdapter is IXERC20Adapter, ERC165, Ownable {
+abstract contract XERC20BaseAdapter is IXERC20Adapter, ERC165 {
     address internal xerc20;
 
     /**
-     * @dev Sets the XERC20 token and the owner of this contract.
+     * @dev Sets the XERC20 token.
      */
-    constructor(address _xerc20, address _owner) {
-        // TODO: maybe we should check whether the token is actually an XERC20
+    constructor(address _xerc20) {
         xerc20 = _xerc20;
-        _transferOwnership(_owner);
     }
 
     function getXERC20() external view returns (address) {

@@ -90,18 +90,7 @@ contract L1LockboxGateway is XERC20BaseGateway, L1CustomGateway {
     /**
      * @dev Not implemented since L1/L2 token relation is being built upon deployment.
      */
-    function registerTokenToL2(
-        address,
-        uint256,
-        uint256,
-        uint256
-    )
-        external
-        payable
-        virtual
-        override
-        returns (uint256)
-    {
+    function registerTokenToL2(address, uint256, uint256, uint256) external payable virtual override returns (uint256) {
         revert NotImplementedFunction();
     }
 

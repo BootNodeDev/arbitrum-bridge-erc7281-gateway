@@ -25,8 +25,7 @@ order for Renzo to enable bridging the ezETH token it would need to:
 
 ## An XERC20 token on Ethereum with a XERC20 counterpart token on Arbitrum
 
-There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific
-gateway.
+There are a few prerequisites to keep in mind for registering a token in the router associating it to a specific gateway.
 
 First of all, the L1 counterpart of the token must conform to the ICustomToken interface. This means that:
 
@@ -50,7 +49,7 @@ In order to be able to use this approach it would be required to:
 
 - BootNode's UI PR to be merged (TODO add PR link)
 
-**Anyone**
+**Some trusted entity**
 
 - Deploy both `L1XERC20Gateway` and `L1XERC20Gateway`
 
@@ -58,7 +57,8 @@ In order to be able to use this approach it would be required to:
 
 1. Deploy an `L1XERC20Adapter` if the XERC20 token
 2. Call the `registerTokenOnL2` function on the deployed `L1XERC20Adapter`
-3. Set the deployed `L1XERC20Adapter` as a `bridge` on the XERC20 token
+3. Set the `L1XERC20Gateway` as a `bridge` on the XERC20 token. **WARNING:** Token issuer must ensure the previous step
+   was properly executed before this one.
 4. Make a PR to [Arbitrum's UI repository](https://github.com/OffchainLabs/arbitrum-token-bridge) adding the L2 XERC20
    token to
    [L2ApprovalUtils](https://github.com/OffchainLabs/arbitrum-token-bridge/blob/master/packages/arb-token-bridge-ui/src/util/L2ApprovalUtils.ts)

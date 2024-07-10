@@ -11,6 +11,11 @@ import { AddressAliasHelper } from "@arbitrum/tokenbridge/libraries/AddressAlias
 import { XERC20 } from "xerc20/contracts/XERC20.sol";
 
 import { L2XERC20Gateway } from "src/L2XERC20Gateway.sol";
+import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
+
+contract MockAdapter is XERC20BaseAdapter {
+    constructor(address _xerc20, address _owner) XERC20BaseAdapter(_xerc20) { }
+}
 
 contract L2XERC20GatewayTest is Test {
     ArbSysMock public arbSysMock = new ArbSysMock();
@@ -91,6 +96,31 @@ contract L2XERC20GatewayTest is Test {
         l2Gateway.finalizeInboundTransfer(l1Token, _user, _dest, amountToBridge, data);
 
         assertEq(xerc20.balanceOf(_dest), balanceBefore + amountToBridge);
+    }
+
+    function test_FinalizeInboundTransfer_should_not_work_with_adapter() public virtual {
+        bytes memory gatewayData = "";
+        bytes memory callHookData = "";
+        bytes memory data = abi.encode(gatewayData, callHookData);
+
+        MockAdapter fakeAdapter = new MockAdapter(address(xerc20), _owner);
+
+        address[] memory l1Tokens = new address[](1);
+        l1Tokens[0] = makeAddr("someToken");
+
+        address[] memory l2Tokens = new address[](1);
+        l2Tokens[0] = address(fakeAdapter);
+
+        vm.prank(AddressAliasHelper.applyL1ToL2Alias(l1Counterpart));
+        l2Gateway.registerTokenFromL1(l1Tokens, l2Tokens);
+
+        uint256 balanceBefore = xerc20.balanceOf(_dest);
+
+        vm.prank(AddressAliasHelper.applyL1ToL2Alias(l1Counterpart));
+        vm.expectRevert();
+        l2Gateway.finalizeInboundTransfer(l1Tokens[0], _user, _dest, amountToBridge, data);
+
+        assertEq(xerc20.balanceOf(_dest), balanceBefore);
     }
 
     ////

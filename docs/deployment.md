@@ -27,8 +27,8 @@ Notice that the values used for `GATEWAY_SALT` can be used only once on each net
 
 **L1XERC20Gateway** Required environment variables:
 
-- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L2XERC20Gateway`
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the same
+  address for `L2XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
   `L2XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
@@ -52,8 +52,8 @@ $ yarn deploy:gateway
 
 **L2XER20Gateway** Required environment variables:
 
-- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L1XERC20Gateway`
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the same
+  address for `L1XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
   `L1XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
@@ -82,8 +82,8 @@ Notice that the values used for `GATEWAY_SALT` can be used only once on each net
 
 **L1LockboxGateway** Required environment variables:
 
-- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L2XERC20Gateway`
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the same
+  address for `L2XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
   `L2XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
@@ -108,8 +108,8 @@ $ yarn deploy:lockboxGateway
 
 **L2LockboxGateway** Required environment variables:
 
-- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the
-  same address for `L1XERC20Gateway`
+- `GATEWAY_SALT`: Salt used for deploying the contract through `CREATE3Factory`. **IMPORTANT:** make sure to use the same
+  address for `L1XERC20Gateway`
 - `DEPLOYER_PK`: Your deployer address private key. **IMPORTANT:** make sure to use the same address for
   `L1XERC20Gateway`
 - `CREATE3_FACTORY`: Address of the `CREATE3Factory`. **IMPORTANT:** make sure to use the same address for
@@ -135,8 +135,8 @@ $ yarn deploy:lockboxGateway:arb
 
 **XERC20**
 
-The XERC20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address
-on both networks you must to use the same `DEPLOYER_PK`, `XERC20_FACTORY`, `XERC20_NAME` and `XERC20_SYMBOL` values for
+The XERC20 token is deployed using a `XERC20Factory` contract. In order to have the token deployed on the same address on
+both networks you must to use the same `DEPLOYER_PK`, `XERC20_FACTORY`, `XERC20_NAME` and `XERC20_SYMBOL` values for
 running bot scripts.
 
 Required environment variables:

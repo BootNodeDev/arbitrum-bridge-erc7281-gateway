@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.25;
 
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { XERC20BaseAdapter } from "src/XERC20BaseAdapter.sol";
 import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
 
@@ -14,7 +15,7 @@ import { L1ArbitrumEnabled } from "src/libraries/L1ArbitrumEnabled.sol";
  *
  * @author BootNode
  */
-contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
+contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled, Ownable {
     /**
      * @dev Sets the XERC20 token, the gateway and the owner.
      */
@@ -23,9 +24,11 @@ contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
         address _gatewayAddress,
         address _owner
     )
-        XERC20BaseAdapter(_xerc20, _owner)
+        XERC20BaseAdapter(_xerc20)
         L1ArbitrumEnabled(_gatewayAddress)
-    { }
+    {
+        _transferOwnership(_owner);
+    }
 
     /**
      * @dev Sets the token/gateway relation on Arbitrum Router and registers the token on L2 counterpart gateway.
@@ -55,6 +58,7 @@ contract L1XERC20Adapter is XERC20BaseAdapter, L1ArbitrumEnabled {
         payable
         override
         onlyOwner
+        checkValue(valueForGateway + valueForRouter)
     {
         _registerTokenOnL2(
             l2TokenAddress,

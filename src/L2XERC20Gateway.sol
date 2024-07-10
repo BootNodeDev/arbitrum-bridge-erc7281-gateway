@@ -125,22 +125,19 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
 
     /**
      * @notice Mint on L2 upon L1 deposit.
-     * If token not yet deployed and symbol/name/decimal data is included, deploys StandardArbERC20
-     * @dev Callable only by the L1ERC20Gateway.outboundTransfer method. For initial deployments of a token the L1
-     * L1ERC20Gateway
-     * is expected to include the deployData. If not a L1 withdrawal is automatically triggered for the user
+     * @dev Callable only by the L1ERC20Gateway.outboundTransfer method. If L2Token is not yet deployed a L1 withdrawal
+     * is automatically triggered for the user.
      * @param _token L1 address of ERC20
      * @param _from account that initiated the deposit in the L1
      * @param _to account to be credited with the tokens in the L2 (can be the user's L2 account or a contract)
      * @param _amount token amount to be minted to the user
-     * @param _data encoded symbol/name/decimal data for deploy, in addition to any additional callhook data
      */
     function finalizeInboundTransfer(
         address _token,
         address _from,
         address _to,
         uint256 _amount,
-        bytes calldata _data
+        bytes calldata
     )
         external
         payable
@@ -148,17 +145,10 @@ contract L2XERC20Gateway is XERC20BaseGateway, L2CustomGateway {
         override
         onlyCounterpartGateway
     {
-        (bytes memory gatewayData, bytes memory callHookData) = GatewayMessageHandler.parseFromL1GatewayMsg(_data);
-
-        if (callHookData.length != 0) {
-            // callHookData should always be 0 since inboundEscrowAndCall is disabled
-            callHookData = bytes("");
-        }
-
         address expectedAddress = calculateL2TokenAddress(_token);
 
         if (!expectedAddress.isContract()) {
-            bool shouldHalt = handleNoContract(_token, expectedAddress, _from, _to, _amount, gatewayData);
+            bool shouldHalt = handleNoContract(_token, expectedAddress, _from, _to, _amount, bytes(""));
             if (shouldHalt) return;
         }
         // ignores gatewayData if token already deployed
