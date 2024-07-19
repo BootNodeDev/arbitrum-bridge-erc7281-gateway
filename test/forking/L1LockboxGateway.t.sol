@@ -93,7 +93,7 @@ contract L1LockboxGatewayForkingTest is Test {
         emit Transfer(address(l1Gateway), address(0), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(address(erc20), _user, _dest, 1_487_344, amountToBridge);
+        emit DepositInitiated(address(erc20), _user, _dest, 1_617_917, amountToBridge);
 
         L1GatewayRouter router = L1GatewayRouter(l1GatewayRouter);
 

@@ -148,7 +148,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         emit Transfer(attacker, address(0), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(address(attackerAdapter), attacker, attacker, 1_487_345, amountToBridge);
+        emit DepositInitiated(address(attackerAdapter), attacker, attacker, 1_617_918, amountToBridge);
 
         uint256 balanceBefore = xerc20.balanceOf(attacker);
         uint256 balanceFakeBefore = fakeXerc20.balanceOf(attacker);
@@ -193,7 +193,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         emit Transfer(_user, address(0), amountToBridge);
 
         vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(bridgeable, _user, _dest, 1_487_345, amountToBridge);
+        emit DepositInitiated(bridgeable, _user, _dest, 1_617_918, amountToBridge);
 
         uint256 balanceBefore = xerc20.balanceOf(_user);
 
