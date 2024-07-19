@@ -65,6 +65,10 @@ In order to be able to use this approach it would be required to:
 
 ![XERC20<>XERC20](/docs/Arbitrum1.png)
 
+## Audits
+
+- [Macro - July 3rd, 2024](https://0xmacro.com/library/audits/connext-7)
+
 ## Deployment Scripts
 
 Deployment script documentation can be found [here](./docs/deployment.md).

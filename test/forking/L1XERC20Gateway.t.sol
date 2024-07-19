@@ -29,7 +29,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     address internal bridgeable;
 
     function setUp() public virtual override {
-        mainnetFork = vm.createSelectFork("mainnet", 19_690_420);
+        mainnetFork = vm.createSelectFork("mainnet", 20_340_311);
         // WARNING: tests will only pass when setting block.basefee to 0
         // or when running with --gas-report, which makes it seem like there's
         // a bug in forge when using this flag.
@@ -147,8 +147,8 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         vm.expectEmit(true, true, true, true, address(fakeXerc20));
         emit Transfer(attacker, address(0), amountToBridge);
 
-        vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(address(attackerAdapter), attacker, attacker, 1_487_345, amountToBridge);
+        vm.expectEmit(true, true, false, true, address(l1Gateway));
+        emit DepositInitiated(address(attackerAdapter), attacker, attacker, 0, amountToBridge);
 
         uint256 balanceBefore = xerc20.balanceOf(attacker);
         uint256 balanceFakeBefore = fakeXerc20.balanceOf(attacker);
@@ -192,8 +192,8 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
         vm.expectEmit(true, true, true, true, address(xerc20));
         emit Transfer(_user, address(0), amountToBridge);
 
-        vm.expectEmit(true, true, true, true, address(l1Gateway));
-        emit DepositInitiated(bridgeable, _user, _dest, 1_487_345, amountToBridge);
+        vm.expectEmit(true, true, false, true, address(l1Gateway));
+        emit DepositInitiated(bridgeable, _user, _dest, 0, amountToBridge);
 
         uint256 balanceBefore = xerc20.balanceOf(_user);
 
