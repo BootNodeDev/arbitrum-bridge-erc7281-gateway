@@ -29,7 +29,7 @@ contract L1XERC20GatewayForkingTest is L1XERC20BaseGatewayTest {
     address internal bridgeable;
 
     function setUp() public virtual override {
-        mainnetFork = vm.createSelectFork("mainnet", 19_690_420);
+        mainnetFork = vm.createSelectFork("mainnet", 20_340_311);
         // WARNING: tests will only pass when setting block.basefee to 0
         // or when running with --gas-report, which makes it seem like there's
         // a bug in forge when using this flag.

@@ -39,7 +39,7 @@ contract L1LockboxGatewayForkingTest is Test {
     uint256 internal gasPriceBid = 1_000_000_000;
 
     function setUp() public {
-        mainnetFork = vm.createSelectFork("mainnet", 19_690_420);
+        mainnetFork = vm.createSelectFork("mainnet", 20_340_311);
         // WARNING: tests will only pass when setting block.basefee to 0
         // or when running with --gas-report, which makes it seem like there's
         // a bug in forge when using this flag.
